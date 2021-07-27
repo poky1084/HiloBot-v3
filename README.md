@@ -1,3 +1,3 @@
 # Hilo-v2
 
-![GitHub all releases](https://img.shields.io/github/downloads/poky1084/Hilo-v2/total)
+![GitHub release (latest by date)](https://img.shields.io/github/downloads/poky1084/Hilo-v2/Hilo-v2.0/total)
