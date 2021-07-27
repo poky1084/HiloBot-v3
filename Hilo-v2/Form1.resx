@@ -129,6 +129,13 @@ Number 3 for random (the bot can choose randomly for equal/hi/low.)
 Number 4 for going the Lowest Odds (example, you have 8, the bot will going Hi because of higher payout)
 Number 5 for going the Highest Odds (example, you have 6, the bot will going Hi because of lowest payout / safe risk)
 
+In Rank put one of these: A,2,3,4,5,6,7,8,9,10,J,Q,K
+In Suit put on of these: H, C, D, S 
+In Pattern put numbers 0-5. Example: 2,4,5,5,1,0
+
+All instructions is on forum:
+https://forum.stake.com/topic/44407-hilo-bot-made-for-hunters/
+
 Odds: (%)
 A - 92,30
 K - 92,30
