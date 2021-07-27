@@ -6,6 +6,7 @@
     <RootNamespace>Hilo_v2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>icon-default.ico</ApplicationIcon>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

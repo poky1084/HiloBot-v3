@@ -217,7 +217,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
@@ -246,7 +246,7 @@ namespace Hilo_v2
             }
             else
             {
-                EditStatus("Error logging in");
+                EditStatus("Error logging in. Code:"+ restResponse.StatusCode);
                 textBox1.Enabled = true;
                 button1.Enabled = true;
                 loggedin = false;
@@ -282,7 +282,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
@@ -382,7 +382,7 @@ namespace Hilo_v2
                     },
 
                 });
-                Debug.WriteLine(restResponse.Content);
+                //Debug.WriteLine(restResponse.Content);
                 if (restResponse.StatusCode == HttpStatusCode.OK)
                 {
                     if (!restResponse.Content.Contains("not have enough balance"))
@@ -485,7 +485,7 @@ namespace Hilo_v2
                     },
 
                 });
-                Debug.WriteLine(restResponse.Content);
+                //Debug.WriteLine(restResponse.Content);
                 //button2.Enabled = true;
                 if (restResponse.StatusCode == HttpStatusCode.OK)
                 {
@@ -662,7 +662,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
@@ -1041,7 +1041,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
                 if (!restResponse.Content.Contains("not have enough balance"))
