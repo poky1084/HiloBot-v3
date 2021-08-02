@@ -435,20 +435,25 @@ namespace Hilo_v2
                             ResetBaseAfterStop();
                             run = 0;
                             AddLog("Auto stopped");
+                            EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                             patternBox.Enabled = true;
                         }
                         else if (response.errors[0].errorType == "existingGame")
                         {
+                            EditStatus("There is an active hilo game. Use manual bet");
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
                         }
                         else if (response.errors[0].errorType == "stringPatternBase")
                         {
-                            
+                            EditStatus("Invalid Startcard (rank/suit)");
                             run = 0;
                             patternBox.Enabled = true;
                         }
-                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                        else
+                        {
+                            EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                        }
                     }
                 }
                 else
@@ -797,7 +802,7 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    EditStatus("Can't start auto. (Active bet)");
+                    EditStatus("Can't start auto (Active game). Play manual or Cashout");
                 }
 
 
@@ -1269,9 +1274,12 @@ namespace Hilo_v2
                 {
                     if (response.errors[0].errorType == "hiloNoRoundsPlayed")
                     {
-
+                        EditStatus("Before cashout, click Higher, Lower or Equal");
                     }
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    else
+                    {
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    }
 
                 }
             }

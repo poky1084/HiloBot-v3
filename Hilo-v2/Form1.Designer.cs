@@ -187,7 +187,7 @@ namespace Hilo_v2
             this.ManualPage.Name = "ManualPage";
             this.ManualPage.Size = new System.Drawing.Size(439, 227);
             this.ManualPage.TabIndex = 2;
-            this.ManualPage.Text = "Manual";
+            this.ManualPage.Text = "Manual/Auto";
             this.ManualPage.UseVisualStyleBackColor = true;
             // 
             // ResettoBaseWin
@@ -584,7 +584,7 @@ namespace Hilo_v2
             this.ManualLow.Name = "ManualLow";
             this.ManualLow.Size = new System.Drawing.Size(64, 32);
             this.ManualLow.TabIndex = 2;
-            this.ManualLow.Text = "Low";
+            this.ManualLow.Text = "Lower";
             this.ManualLow.UseVisualStyleBackColor = true;
             this.ManualLow.Click += new System.EventHandler(this.ManualLow_Click);
             // 
@@ -604,7 +604,7 @@ namespace Hilo_v2
             this.ManualHigh.Name = "ManualHigh";
             this.ManualHigh.Size = new System.Drawing.Size(64, 33);
             this.ManualHigh.TabIndex = 0;
-            this.ManualHigh.Text = "High";
+            this.ManualHigh.Text = "Higher";
             this.ManualHigh.UseVisualStyleBackColor = true;
             this.ManualHigh.Click += new System.EventHandler(this.ManualHigh_Click);
             // 
