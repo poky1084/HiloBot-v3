@@ -92,7 +92,7 @@ namespace Hilo_v2
         private void ProfitShow(double profits)
         {
               
-            label8.Text = "Profit: "+ profits.ToString("0.00000000");
+            label8.Text = "Profit: "+ profits.ToString("0.00000000").Replace("-", "−");
         }
         private void AddCard(Data response)
         {
@@ -253,14 +253,18 @@ namespace Hilo_v2
                         button1.Enabled = true;
                         loggedin = false;
                     }
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    else
+                    {
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
+                    }
 
 
                 }
             }
             else
             {
-                EditStatus("Error logging in. Code:"+ restResponse.StatusCode);
+                EditStatus("Error logging in. (Code:"+ restResponse.StatusCode+")");
                 textBox1.Enabled = true;
                 button1.Enabled = true;
                 loggedin = false;
@@ -340,7 +344,7 @@ namespace Hilo_v2
             }
             else
             {
-                EditStatus("Error getting ActiveBet. Code:"+ restResponse.StatusCode);
+                EditStatus("Error getting Active game. (Code:" + restResponse.StatusCode + ")");
             }
 
         }
@@ -449,6 +453,8 @@ namespace Hilo_v2
                 }
                 else
                 {
+                    EditStatus("HiloBet: Retrying in 2 sec. (Code:" + restResponse.StatusCode + ")");
+
                     await Task.Delay(2000);
                     HiloBet();
                 }
@@ -633,6 +639,8 @@ namespace Hilo_v2
                 }
                 else
                 {
+                    EditStatus("HiloGuess: Retrying in 1 sec. (Code:" + restResponse.StatusCode + ")");
+
                     await Task.Delay(1000);
                     var guess = Pattern(list.Count - 1);
                     HiloNext(guess);
@@ -732,6 +740,8 @@ namespace Hilo_v2
             }
             else
             {
+                EditStatus("HiloCashout: Retrying in 2 sec. (Code:" + restResponse.StatusCode + ")");
+
                 await Task.Delay(2000);
                 HiloCashout();
             }
@@ -1078,9 +1088,10 @@ namespace Hilo_v2
 
                     if(response.data.hiloBet != null)
                     {
+                        AddLog("Manual started");
                         ClearCards();
                         AddStartCard(response);
-
+                        
                         gamecount++;
                     }
                     else
@@ -1098,7 +1109,7 @@ namespace Hilo_v2
             }
             else
             {
-                EditStatus("Bet failed, try again");
+                EditStatus("Bet failed, try again. (Code:" + restResponse.StatusCode + ")");            
             }
         }
         private async void ManualNext(string guessed)
@@ -1189,7 +1200,8 @@ namespace Hilo_v2
             }
             else
             {
-                EditStatus("Guess failed, try again");
+                EditStatus("Guess failed, try again. (Code:" + restResponse.StatusCode + ")");
+
             }
 
 
@@ -1237,7 +1249,7 @@ namespace Hilo_v2
                     if (response.data.hiloCashout != null)
                     {
 
-
+                        AddLog("Manual Cashout");
                         BetList(response);
                         ClearCards();
 
@@ -1265,7 +1277,8 @@ namespace Hilo_v2
             }
             else
             {
-                EditStatus("Cashout failed, try again");
+                EditStatus("Cashout failed, try again. (Code:" + restResponse.StatusCode + ")");
+
             }
         }
 

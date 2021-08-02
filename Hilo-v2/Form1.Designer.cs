@@ -761,7 +761,7 @@ namespace Hilo_v2
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(349, 99);
+            this.label8.Location = new System.Drawing.Point(335, 99);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(94, 13);
             this.label8.TabIndex = 7;
@@ -771,7 +771,7 @@ namespace Hilo_v2
             // 
             this.linkLabel1.Location = new System.Drawing.Point(302, 99);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(41, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(37, 13);
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Reset";
