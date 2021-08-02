@@ -245,7 +245,6 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
 
                     if (response.errors[0].errorType == "invalidSession")
                     {
@@ -254,7 +253,9 @@ namespace Hilo_v2
                         button1.Enabled = true;
                         loggedin = false;
                     }
-                        
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
+
                 }
             }
             else
@@ -424,7 +425,7 @@ namespace Hilo_v2
                     }
                     else
                     {
-                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                        
                         if (response.errors[0].errorType == "insufficientBalance")
                         {
                             ResetBaseAfterStop();
@@ -443,6 +444,7 @@ namespace Hilo_v2
                             run = 0;
                             patternBox.Enabled = true;
                         }
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                     }
                 }
                 else
@@ -611,7 +613,6 @@ namespace Hilo_v2
                     }
                     else
                     {
-                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                         if (response.errors[0].errorType == "notFound")
                         {
                            
@@ -626,6 +627,8 @@ namespace Hilo_v2
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
                         }
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
                     }
                 }
                 else
@@ -719,11 +722,12 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                     if (response.errors[0].errorType == "hiloNoRoundsPlayed")
                     {
 
                     }
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
                 }
             }
             else
@@ -1174,12 +1178,13 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                     if (response.errors[0].errorType == "notFound")
                     {
 
                         ClearCards();
                     }
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
                 }
             }
             else
@@ -1250,11 +1255,12 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                     if (response.errors[0].errorType == "hiloNoRoundsPlayed")
                     {
 
                     }
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
                 }
             }
             else
