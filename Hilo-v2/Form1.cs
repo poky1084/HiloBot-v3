@@ -96,31 +96,38 @@ namespace Hilo_v2
         }
         private void AddCard(Data response)
         {
-
-            int nexts = response.data.hiloNext.state.rounds.Count - 1;
-            list.Add(response.data.hiloNext.state.rounds[nexts].card.rank);
-            listView1.Columns.Add(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));
-            label2.Text = response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x";
-            listView1.Columns[nexts].Width = 65;
-            rowstr += response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
-            string[] row = rowstr.Split(',');
-            var listViewItem = new ListViewItem(row);
-            listViewItem.Font = new Font("Consolas", 10f);
-
-            listView1.Items.Insert(0, listViewItem);
-            if (listView1.Items.Count > 1)
+            if (response.data.hiloNext != null)
             {
-                listView1.Items[1].Remove();
+
+
+                int nexts = response.data.hiloNext.state.rounds.Count - 1;
+                list.Add(response.data.hiloNext.state.rounds[nexts].card.rank);
+                listView1.Columns.Add(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));
+                label2.Text = response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x";
+                listView1.Columns[nexts].Width = 65;
+                rowstr += response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
+                string[] row = rowstr.Split(',');
+                var listViewItem = new ListViewItem(row);
+                listViewItem.Font = new Font("Consolas", 10f);
+
+                listView1.Items.Insert(0, listViewItem);
+                if (listView1.Items.Count > 1)
+                {
+                    listView1.Items[1].Remove();
+                }
+                SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
             }
-            SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
         }
         private void AddStartCard(Data response)
         {
-            list.Add(response.data.hiloBet.state.startCard.rank);
-            listView1.Columns.Add(CardLayout(response.data.hiloBet.state.startCard.rank, response.data.hiloBet.state.startCard.suit));
-            var start = new ListViewItem("Start");
-            start.Font = new Font("Consolas", 10f);
-            listView1.Items.Insert(0, start);
+            if (response.data.hiloBet != null)
+            {
+                list.Add(response.data.hiloBet.state.startCard.rank);
+                listView1.Columns.Add(CardLayout(response.data.hiloBet.state.startCard.rank, response.data.hiloBet.state.startCard.suit));
+                var start = new ListViewItem("Start");
+                start.Font = new Font("Consolas", 10f);
+                listView1.Items.Insert(0, start);
+            }
         }
         private void ClearCards()
         {
@@ -171,7 +178,7 @@ namespace Hilo_v2
                 listView4.Items.Insert(0, betitem);
 
             }
-            else
+            else if(response.data.hiloNext != null)
             {
                 double betamount = response.data.hiloNext.amount;
                 double profit = -response.data.hiloNext.amount;
@@ -221,7 +228,7 @@ namespace Hilo_v2
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
-                if (!restResponse.Content.Contains("invalid_session") && !restResponse.Content.Contains("errors"))
+                if (response.errors == null)
                 {
 
 
@@ -238,10 +245,16 @@ namespace Hilo_v2
                 }
                 else
                 {
-                    AddLog("Error logging in (Wrong api key)");
-                    textBox1.Enabled = true;
-                    button1.Enabled = true;
-                    loggedin = false;
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
+                    if (response.errors[0].errorType == "invalidSession")
+                    {
+                        AddLog("Error logging in (Wrong api key)");
+                        textBox1.Enabled = true;
+                        button1.Enabled = true;
+                        loggedin = false;
+                    }
+                        
                 }
             }
             else
@@ -285,43 +298,48 @@ namespace Hilo_v2
             //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
-
-
-                if (response.data.user.activeCasinoBet != null)
+                if (response.errors == null)
                 {
-                    list.Add(response.data.user.activeCasinoBet.state.startCard.rank);
-                    listView1.Columns.Add(CardLayout(response.data.user.activeCasinoBet.state.startCard.rank, response.data.user.activeCasinoBet.state.startCard.suit));
-                    var start = new ListViewItem("Start");
-                    start.Font = new Font("Consolas", 10f);
-                    listView1.Items.Insert(0, start);
-
-                    for (var i = 0; i < response.data.user.activeCasinoBet.state.rounds.Count; i++)
+                    if (response.data.user.activeCasinoBet != null)
                     {
-                        list.Add(response.data.user.activeCasinoBet.state.rounds[i].card.rank);
-                        ColumnHeader head = new ColumnHeader();
-                        head.Text = CardLayout(response.data.user.activeCasinoBet.state.rounds[i].card.rank, response.data.user.activeCasinoBet.state.rounds[i].card.suit);
-                        listView1.Columns.Add(head);
-                        listView1.Columns[i].Width = 65;
-                        rowstr += response.data.user.activeCasinoBet.state.rounds[i].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
-                        string[] row = rowstr.Split(',');
-                        var listViewItem = new ListViewItem(row);
-                        listViewItem.Font = new Font("Consolas", 10f);
+                        list.Add(response.data.user.activeCasinoBet.state.startCard.rank);
+                        listView1.Columns.Add(CardLayout(response.data.user.activeCasinoBet.state.startCard.rank, response.data.user.activeCasinoBet.state.startCard.suit));
+                        var start = new ListViewItem("Start");
+                        start.Font = new Font("Consolas", 10f);
+                        listView1.Items.Insert(0, start);
 
-                        listView1.Items.Insert(0, listViewItem);
-                        if (listView1.Items.Count > 1)
+                        for (var i = 0; i < response.data.user.activeCasinoBet.state.rounds.Count; i++)
                         {
-                            listView1.Items[1].Remove();
+                            list.Add(response.data.user.activeCasinoBet.state.rounds[i].card.rank);
+                            ColumnHeader head = new ColumnHeader();
+                            head.Text = CardLayout(response.data.user.activeCasinoBet.state.rounds[i].card.rank, response.data.user.activeCasinoBet.state.rounds[i].card.suit);
+                            listView1.Columns.Add(head);
+                            listView1.Columns[i].Width = 65;
+                            rowstr += response.data.user.activeCasinoBet.state.rounds[i].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
+                            string[] row = rowstr.Split(',');
+                            var listViewItem = new ListViewItem(row);
+                            listViewItem.Font = new Font("Consolas", 10f);
+
+                            listView1.Items.Insert(0, listViewItem);
+                            if (listView1.Items.Count > 1)
+                            {
+                                listView1.Items[1].Remove();
+                            }
+
                         }
+                        SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
+
 
                     }
-                    SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
-
-
+                }
+                else
+                {
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
                 }
             }
             else
             {
-                EditStatus("Error getting ActiveBet");
+                EditStatus("Error getting ActiveBet. Code:"+ restResponse.StatusCode);
             }
 
         }
@@ -385,46 +403,46 @@ namespace Hilo_v2
                 //Debug.WriteLine(restResponse.Content);
                 if (restResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    if (!restResponse.Content.Contains("not have enough balance"))
+                    if (response.errors == null)
                     {
 
-
-
-
-                        if (!restResponse.Content.Contains("You already have an active"))
+                        if (response.data.hiloBet != null)
                         {
-                            if(!restResponse.Content.Contains("Incorrect input"))
-                            {
-                                AddStartCard(response);
-                                gamecount++;
-                                
-                                var guess = Pattern(list.Count - 1);
-                                HiloNext(guess);
-                            }
-                            else 
-                            {
-                                EditStatus("Invalid Start card");
-                                run = 0;
-                                patternBox.Enabled = true;
-                            }
 
 
-                            
-
-                        }
-                        else
-                        {
+                            AddStartCard(response);
+                            gamecount++;
 
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
                         }
+                        else
+                        {
+                            EditStatus("No response data");
+                        }
+
                     }
                     else
                     {
-                        EditStatus("Not have enough balance");
-                        ResetBaseAfterStop();
-                        run = 0;
-                        patternBox.Enabled = true;
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                        if (response.errors[0].errorType == "insufficientBalance")
+                        {
+                            ResetBaseAfterStop();
+                            run = 0;
+                            AddLog("Auto stopped");
+                            patternBox.Enabled = true;
+                        }
+                        else if (response.errors[0].errorType == "existingGame")
+                        {
+                            var guess = Pattern(list.Count - 1);
+                            HiloNext(guess);
+                        }
+                        else if (response.errors[0].errorType == "stringPatternBase")
+                        {
+                            
+                            run = 0;
+                            patternBox.Enabled = true;
+                        }
                     }
                 }
                 else
@@ -490,46 +508,72 @@ namespace Hilo_v2
                 if (restResponse.StatusCode == HttpStatusCode.OK)
                 {
 
-
-                    if (!restResponse.Content.Contains("Game not found"))
+                    if (response.errors == null)
                     {
-                        if (!restResponse.Content.Contains("guess is invalid"))
+                        if (response.data.hiloNext != null)
                         {
 
-                            if (!restResponse.Content.Contains("Maximum skips"))
+
+
+                            AddCard(response);
+
+                            double payoutMulti = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
+                            if (guessed == "skip")
                             {
-
-                                AddCard(response);
-
-                                double payoutMulti = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
-                                if (guessed == "skip")
+                                skipped++;
+                            }
+                            else
+                            {
+                                guesses++;
+                            }
+                            if (payoutMulti > 0)
+                            {
+                                if (stopaftermulti && payoutMulti >= (double)StopAutoValue.Value)
                                 {
-                                    skipped++;
+                                    run = 0;
+                                    AddLog("Auto stopped");
+
+                                    patternBox.Enabled = true;
+                                    ResetBaseAfterStop();
+                                    HiloCashout();
                                 }
                                 else
                                 {
-                                    guesses++;
-                                }
-                                if (payoutMulti > 0)
-                                {
-                                    if (stopaftermulti && payoutMulti >= (double)StopAutoValue.Value)
-                                    {
-                                        run = 0;
-                                        AddLog("Auto stopped");
 
-                                        patternBox.Enabled = true;
-                                        ResetBaseAfterStop();
+
+
+                                    if (payoutMulti >= (double)AutoCashout.Value && AutoCashout.Value > 0 && CashoutcheckBox2.Checked == true)
+                                    {
+
                                         HiloCashout();
+
                                     }
                                     else
                                     {
 
 
 
-                                        if (payoutMulti >= (double)AutoCashout.Value && AutoCashout.Value > 0 && CashoutcheckBox2.Checked == true)
+                                        if (skipped >= 52)
                                         {
 
-                                            HiloCashout();
+                                        }
+                                        if (list.Count > patternBox.Text.Trim().Split(',').Length)
+                                        {
+
+                                            if (!pauseonpattern)
+                                            {
+
+                                                HiloCashout();
+                                            }
+                                            else
+                                            {
+                                                run = 0;
+
+
+                                                patternBox.Enabled = true;
+                                                ResetBaseAfterStop();
+                                                AddLog("Paused (Pause on pattern)");
+                                            }
 
                                         }
                                         else
@@ -537,76 +581,51 @@ namespace Hilo_v2
 
 
 
-                                            if (skipped >= 52)
-                                            {
-
-                                            }
-                                            if (list.Count > patternBox.Text.Trim().Split(',').Length)
-                                            {
-
-                                                if (!pauseonpattern)
-                                                {
-
-                                                    HiloCashout();
-                                                }
-                                                else
-                                                {
-                                                    run = 0;
-                                                    
-
-                                                    patternBox.Enabled = true;
-                                                    ResetBaseAfterStop();
-                                                    AddLog("Paused (Pause on pattern)");
-                                                }
-
-                                            }
-                                            else
-                                            {
-
-
-
-                                                var guess = Pattern(list.Count - 1);
-                                                HiloNext(guess);
-                                            }
+                                            var guess = Pattern(list.Count - 1);
+                                            HiloNext(guess);
                                         }
                                     }
-
-
                                 }
-                                else
-                                {
 
-                                    BetList(response);
-                                    ClearCards();
-                                    profitall -= response.data.hiloNext.amount;
-                                    ProfitShow(profitall);
-                                    if (IncrementLoss.Value > 1)
-                                    {
-                                        betamount *= IncrementLoss.Value;
-                                    }
-
-                                    HiloBet();
-                                }
 
                             }
                             else
                             {
-                                EditStatus("Maximum skips");
-                                var guess = Pattern(list.Count - 1);
-                                HiloNext(guess);
 
+                                BetList(response);
+                                ClearCards();
+                                profitall -= response.data.hiloNext.amount;
+                                ProfitShow(profitall);
+                                if (IncrementLoss.Value > 1)
+                                {
+                                    betamount *= IncrementLoss.Value;
+                                }
+
+                                HiloBet();
                             }
                         }
                         else
                         {
-                            EditStatus("guess is invalid");
+                            EditStatus("No response data");
                         }
                     }
                     else
                     {
-                        EditStatus("Game not found");
-                        ClearCards();
+                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                        if (response.errors[0].errorType == "notFound")
+                        {
+                           
+                            ClearCards();
+                        }
+                        else if (response.errors[0].errorType == "hiloInvalidGuess")
+                        {
 
+                        }
+                        else if (response.errors[0].errorType == "hiloMaxSkip")
+                        {
+                            var guess = Pattern(list.Count - 1);
+                            HiloNext(guess);
+                        }
                     }
                 }
                 else
@@ -666,39 +685,45 @@ namespace Hilo_v2
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
-
-                if (!restResponse.Content.Contains("Bet on an outcome"))
+                if (response.errors == null)
                 {
-                    profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
-                    ProfitShow(profitall);
-                    if (ResettoBaseWin.Checked == true)
+                    if (response.data.hiloCashout != null)
                     {
-                        betamount = BaseBetAmount.Value;
-                    }
-                    BetList(response);
-                    ClearCards();
-                    if (stopafterwin)
-                    {
-                        run = 0;
-                        AddLog("Auto stopped");
-                        ResetBaseAfterStop();
-                        patternBox.Enabled = true;
+
+
+                        profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
+                        ProfitShow(profitall);
+                        if (ResettoBaseWin.Checked == true)
+                        {
+                            betamount = BaseBetAmount.Value;
+                        }
+                        BetList(response);
+                        ClearCards();
+                        if (stopafterwin)
+                        {
+                            run = 0;
+                            AddLog("Auto stopped");
+                            ResetBaseAfterStop();
+                            patternBox.Enabled = true;
+                        }
+                        else
+                        {
+                            HiloBet();
+                        }
                     }
                     else
                     {
-                        HiloBet();
+                        EditStatus("No response data");
                     }
 
                 }
                 else
                 {
-                    EditStatus("Bet on an outcome");
-                    ManualStart.Enabled = false;
-                    ManualHigh.Enabled = true;
-                    ManualLow.Enabled = true;
-                    ManualSkip.Enabled = true;
-                    ManualCashout_btn.Enabled = true;
-                    ManualEqual_btn.Enabled = true;
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    if (response.errors[0].errorType == "hiloNoRoundsPlayed")
+                    {
+
+                    }
                 }
             }
             else
@@ -1044,21 +1069,27 @@ namespace Hilo_v2
             //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
-                if (!restResponse.Content.Contains("not have enough balance"))
+                if (response.errors == null)
                 {
 
-                    if (!restResponse.Content.Contains("You already have an active"))
+                    if(response.data.hiloBet != null)
                     {
                         ClearCards();
                         AddStartCard(response);
 
                         gamecount++;
-
                     }
+                    else
+                    {
+                        EditStatus("No response data");
+                    }
+
+
                 }
                 else
                 {
-                    EditStatus("Not have enough balance");
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
                 }
             }
             else
@@ -1106,52 +1137,49 @@ namespace Hilo_v2
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
-
-                if (!restResponse.Content.Contains("Game not found"))
+                if (response.errors == null)
                 {
-                    if (!restResponse.Content.Contains("guess is invalid"))
+                    if (response.data.hiloNext != null)
                     {
 
-
-                        if (!restResponse.Content.Contains("Maximum skips"))
+                        AddCard(response);
+                        double payoutMulti = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
+                        if (payoutMulti > 0)
                         {
-                            AddCard(response);
-                            double payoutMulti = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
-                            if (payoutMulti > 0)
+
+
+
+
+                            if (guessed == "skip")
                             {
-
-
-
-
-                                if (guessed == "skip")
-                                {
-                                    skipped++;
-                                }
-                            }
-                            else
-                            {
-                                BetList(response);
-                                ClearCards();
-
-                                profitall -= response.data.hiloNext.amount;
-                                ProfitShow(profitall);
-                                patternBox.Enabled = true;
+                                skipped++;
                             }
                         }
                         else
                         {
-                            EditStatus("Maximum skips");
+                            BetList(response);
+                            ClearCards();
 
+                            profitall -= response.data.hiloNext.amount;
+                            ProfitShow(profitall);
+                            patternBox.Enabled = true;
                         }
+                                
                     }
                     else
                     {
-                        EditStatus("Guess is invalid");
+                        EditStatus("No response data");
+
                     }
                 }
                 else
                 {
-                    EditStatus("Game not found");
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    if (response.errors[0].errorType == "notFound")
+                    {
+
+                        ClearCards();
+                    }
                 }
             }
             else
@@ -1198,22 +1226,35 @@ namespace Hilo_v2
             Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
-
-
-                if (!restResponse.Content.Contains("Bet on an outcome") && !restResponse.Content.Contains("errors"))
+                if (response.errors == null)
                 {
-                    BetList(response);
-                    ClearCards();
 
-                    profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
-                    ProfitShow(profitall);
-                    betamount = BaseBetAmount.Value;
+                    if (response.data.hiloCashout != null)
+                    {
 
-                    patternBox.Enabled = true;
+
+                        BetList(response);
+                        ClearCards();
+
+                        profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
+                        ProfitShow(profitall);
+                        betamount = BaseBetAmount.Value;
+
+                        patternBox.Enabled = true;
+   
+                    }
+                    else
+                    {
+                        EditStatus("No response data");
+                    }
                 }
                 else
                 {
-                    EditStatus("Bet on an outcome");
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+                    if (response.errors[0].errorType == "hiloNoRoundsPlayed")
+                    {
+
+                    }
                 }
             }
             else
@@ -1324,15 +1365,23 @@ namespace Hilo_v2
             DelayGuess.Value = Properties.Settings.Default.guessdelay;
             StopLimit.Value = Properties.Settings.Default.gamecountstop;
         }
-
+       
         private void rankBox_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.startcard = rankBox.Text;
+            if (System.Text.RegularExpressions.Regex.IsMatch(rankBox.Text, "^[2-9AJQK]*$") == false)
+            {
+                EditStatus("You may type only number 2-10 and A, J, Q or K as rank");
+            }
         }
-
+        char[] suitchar = { 'H', 'S', 'C', 'D' };
         private void suitBox_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.startcardsuit = suitBox.Text;
+            if(suitchar.Any(c => suitBox.Text.Contains(c)) == false)
+            {
+                EditStatus("You may type only H, C, D or S as suit");
+            }
         }
 
         private void CurrencyList_SelectedIndexChanged(object sender, EventArgs e)
@@ -1358,6 +1407,12 @@ namespace Hilo_v2
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.apikey = textBox1.Text;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            profitall = 0;
+            ProfitShow(profitall);
         }
     }
 }

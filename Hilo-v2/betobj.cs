@@ -23,10 +23,20 @@ namespace Hilo_v2
     public class Data
     {
         public Betdata data { get; set; }
+        public List<Errors> errors { get; set; }
     }
+    public class Errors
+    {
+        public List<string> path { get; set; }
+        public string message { get; set; }
+        public string errorType { get; set; }
+        public string data { get; set; }
+    }
+
     public class ActiveData
     {
         public User data { get; set; }
+        public List<Errors> errors { get; set; }
     }
     public class User
     {

@@ -86,6 +86,7 @@ namespace Hilo_v2
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.ManualPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StopAutoValue)).BeginInit();
@@ -538,6 +539,7 @@ namespace Hilo_v2
             // suitBox
             // 
             this.suitBox.Location = new System.Drawing.Point(219, 26);
+            this.suitBox.MaxLength = 1;
             this.suitBox.Name = "suitBox";
             this.suitBox.Size = new System.Drawing.Size(26, 20);
             this.suitBox.TabIndex = 6;
@@ -547,6 +549,7 @@ namespace Hilo_v2
             // rankBox
             // 
             this.rankBox.Location = new System.Drawing.Point(180, 26);
+            this.rankBox.MaxLength = 2;
             this.rankBox.Name = "rankBox";
             this.rankBox.Size = new System.Drawing.Size(35, 20);
             this.rankBox.TabIndex = 5;
@@ -559,7 +562,7 @@ namespace Hilo_v2
             this.patternBox.Name = "patternBox";
             this.patternBox.Size = new System.Drawing.Size(186, 20);
             this.patternBox.TabIndex = 4;
-            this.patternBox.Text = "5,5,5,5";
+            this.patternBox.Text = "5,5,5";
             this.patternBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.patternBox.TextChanged += new System.EventHandler(this.patternBox_TextChanged);
             // 
@@ -763,13 +766,23 @@ namespace Hilo_v2
             this.label8.Size = new System.Drawing.Size(94, 13);
             this.label8.TabIndex = 7;
             this.label8.Text = "Profit: 0.00000000";
-            this.label8.Visible = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Location = new System.Drawing.Point(302, 99);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(41, 13);
+            this.linkLabel1.TabIndex = 0;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Reset";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 412);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
@@ -861,6 +874,7 @@ namespace Hilo_v2
         private System.Windows.Forms.CheckBox ResettoBaseWin;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 
 

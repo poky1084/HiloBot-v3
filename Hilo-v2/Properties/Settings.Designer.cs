@@ -49,7 +49,7 @@ namespace Hilo_v2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5,4,5,4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5,5,5")]
         public string pattern {
             get {
                 return ((string)(this["pattern"]));
