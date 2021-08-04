@@ -34,6 +34,10 @@ namespace Hilo_v2
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ManualPage = new System.Windows.Forms.TabPage();
+            this.SeedBox3 = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.PauseMulticheckBox = new System.Windows.Forms.CheckBox();
@@ -112,10 +116,6 @@ namespace Hilo_v2
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.SeedBox3 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.ManualPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PauseMulti)).BeginInit();
@@ -228,6 +228,49 @@ namespace Hilo_v2
             this.ManualPage.TabIndex = 2;
             this.ManualPage.Text = "Manual/Auto";
             this.ManualPage.UseVisualStyleBackColor = true;
+            // 
+            // SeedBox3
+            // 
+            this.SeedBox3.Location = new System.Drawing.Point(350, 213);
+            this.SeedBox3.Name = "SeedBox3";
+            this.SeedBox3.Size = new System.Drawing.Size(121, 21);
+            this.SeedBox3.TabIndex = 53;
+            this.SeedBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(277, 217);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(70, 15);
+            this.label26.TabIndex = 52;
+            this.label26.Text = "Client Seed";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "stake.com",
+            "stake.games",
+            "stake.bet",
+            "staketr.com",
+            "staketr2.com",
+            "staketr3.com"});
+            this.comboBox1.Location = new System.Drawing.Point(350, 192);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 23);
+            this.comboBox1.TabIndex = 51;
+            this.comboBox1.Text = "stake.com";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(277, 195);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(74, 15);
+            this.label25.TabIndex = 50;
+            this.label25.Text = "Stake mirror";
             // 
             // label24
             // 
@@ -434,7 +477,7 @@ namespace Hilo_v2
             0,
             0});
             this.StopAutoValue.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -1102,49 +1145,6 @@ namespace Hilo_v2
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(501, 90);
             this.listBox1.TabIndex = 50;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(277, 195);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(74, 15);
-            this.label25.TabIndex = 50;
-            this.label25.Text = "Stake mirror";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "stake.com",
-            "stake.games",
-            "stake.bet",
-            "staketr.com",
-            "staketr2.com",
-            "staketr3.com"});
-            this.comboBox1.Location = new System.Drawing.Point(350, 192);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 23);
-            this.comboBox1.TabIndex = 51;
-            this.comboBox1.Text = "stake.com";
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(277, 217);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(70, 15);
-            this.label26.TabIndex = 52;
-            this.label26.Text = "Client Seed";
-            // 
-            // SeedBox3
-            // 
-            this.SeedBox3.Location = new System.Drawing.Point(350, 213);
-            this.SeedBox3.Name = "SeedBox3";
-            this.SeedBox3.Size = new System.Drawing.Size(121, 21);
-            this.SeedBox3.TabIndex = 53;
-            this.SeedBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // Form1
             // 
