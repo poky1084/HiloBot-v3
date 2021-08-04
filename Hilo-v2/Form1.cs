@@ -1577,7 +1577,7 @@ namespace Hilo_v2
             SeedxLose.Value = Properties.Settings.Default.SeedxLose ;
             SeedxWin.Value = Properties.Settings.Default.SeedxWin;
             comboBox1.Text = Properties.Settings.Default.Mirror;
-
+            SeedBox3.Text = Properties.Settings.Default.clientseed;
         }
 
        
