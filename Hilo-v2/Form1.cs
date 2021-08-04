@@ -585,7 +585,7 @@ namespace Hilo_v2
                             }
                             if (payoutMulti > 0)
                             {
-                                if (PauseMulti.Value >= 1 && PauseMulticheckBox.Checked == true)
+                                if (payoutMulti >= (double)PauseMulti.Value && PauseMulticheckBox.Checked == true)
                                 {
                                     run = 0;
                                     patternBox.Enabled = true;
