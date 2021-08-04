@@ -27,23 +27,35 @@ namespace Hilo_v2
             
         }
         string token = "";
+        string mirror = "https://api.stake.com/graphql";
         bool loggedin = false;
         int run = 0;
         double profitall = 0;
         bool pauseonpattern = false;
         bool stopaftermulti = false;
         List<string> list = new List<string>();
+        List<string> cardlist = new List<string>();
         bool stopafterwin = false;
         decimal betamount = 0;
         string rowstr = "Start,";
         int gamecount = 0;
+        int seedcount = 0;
+        int seedwins = 0;
+        int seedlose = 0;
         int skipped = 0; // 0/52
         int guesses = 0; // 0/100
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
-
-        private const int WM_HSCROLL = 0x114;
-        private const int WPARAM = 7;
+        int wincount = 0;
+        int losecount = 0;
+        int losestreak = 0;
+        int winstreak = 0;
+        double totalwagered = 0;
+        int maxlosestreak = 0;
+        int maxwinstreak = 0;
+        List<int> highestloss = new List<int>();
+        List<int> highestwin = new List<int>();
+        List<double> balances = new List<double>();
+        double balance = 0;
+        int currencyindex = 0;
         private void Application_ApplicationExit(object sender, EventArgs e)
         { 
             
@@ -61,15 +73,15 @@ namespace Hilo_v2
             switch (suit)
             {
                 case "H":
-                    return rank + "" + "\u2661";
+                    return rank + "\u2661";
                 case "C":
-                    return rank + "" + "\u2663";
+                    return rank + "\u2663";
                 case "D":
                     return rank + "\u2662";
                 case "S":
-                    return rank + "" + "\u2660";
+                    return rank + "\u2660";
                 default:
-                    return "";
+                    return "Nosuit";
             }
         }
         Color CardColor(string suit)
@@ -89,10 +101,33 @@ namespace Hilo_v2
                     return Color.Black;
             }
         }
-        private void ProfitShow(double profits)
+        private void UpdateStats()
         {
-              
-            label8.Text = "Profit: "+ profits.ToString("0.00000000").Replace("-", "−");
+            balances[IndexCurrency()] = balance + profitall;
+            //balance = balances[IndexCurrency()];
+            labelProfit.Text = profitall.ToString("0.00000000").Replace("-", "−") + " " + CurrencyList.Text;
+            labelBalance.Text = balances[IndexCurrency()].ToString("0.00000000") + " " + CurrencyList.Text;
+            labelWager.Text = totalwagered.ToString("0.00000000") + " " + CurrencyList.Text;
+            labelWins.Text = wincount.ToString();
+            labelWinstreak.Text = winstreak.ToString() + " | Highest "+maxwinstreak;
+            labelLosses.Text = losecount.ToString();
+            labelLosestreak.Text = losestreak.ToString() + " | Highest " +maxlosestreak;
+            
+        }
+        private void ResetStats()
+        {
+            balance = balances[IndexCurrency()];
+            profitall = 0;
+            totalwagered = 0;
+            wincount = 0;
+            losecount = 0;
+            losestreak = 0;
+            winstreak = 0;
+            highestwin.Clear();
+            highestloss.Clear();
+            maxlosestreak = 0;
+            maxwinstreak = 0;
+            UpdateStats();
         }
         private void AddCard(Data response)
         {
@@ -102,20 +137,17 @@ namespace Hilo_v2
 
                 int nexts = response.data.hiloNext.state.rounds.Count - 1;
                 list.Add(response.data.hiloNext.state.rounds[nexts].card.rank);
-                listView1.Columns.Add(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));
                 label2.Text = response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x";
-                listView1.Columns[nexts].Width = 65;
-                rowstr += response.data.hiloNext.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
-                string[] row = rowstr.Split(',');
-                var listViewItem = new ListViewItem(row);
-                listViewItem.Font = new Font("Consolas", 10f);
+                                
+                //var carditem = new ListViewItem(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));                
+                //listView1.Items.Add(carditem);
+                //listView1.Items[listView1.Items.Count - 1].EnsureVisible();
 
-                listView1.Items.Insert(0, listViewItem);
-                if (listView1.Items.Count > 1)
-                {
-                    listView1.Items[1].Remove();
-                }
-                SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
+                string card = CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit);
+                listBox1.Items.Add(card);
+                listBox1.TopIndex = listBox1.Items.Count - 1;
+
+
             }
         }
         private void AddStartCard(Data response)
@@ -123,10 +155,10 @@ namespace Hilo_v2
             if (response.data.hiloBet != null)
             {
                 list.Add(response.data.hiloBet.state.startCard.rank);
-                listView1.Columns.Add(CardLayout(response.data.hiloBet.state.startCard.rank, response.data.hiloBet.state.startCard.suit));
-                var start = new ListViewItem("Start");
-                start.Font = new Font("Consolas", 10f);
-                listView1.Items.Insert(0, start);
+
+                string startcard = CardLayout(response.data.hiloBet.state.startCard.rank, response.data.hiloBet.state.startCard.suit);
+                listBox1.Items.Add(startcard);
+
             }
         }
         private void ClearCards()
@@ -138,8 +170,8 @@ namespace Hilo_v2
             rowstr = "Start,";
             list.Clear();
             label2.Text = "0.00x";
-            listView1.Columns.Clear();
-            listView1.Items.Clear();
+            //listView1.Columns.Clear();
+            listBox1.Items.Clear();
         }
         private void EditStatus(string text)
         {
@@ -149,7 +181,7 @@ namespace Hilo_v2
         }
         private void AddLog(string text)
         {
-            label3.Text = "Status: " + text;
+            //label3.Text = "Status: " + text;
             string[] row = { DateTime.Now.ToString("HH:mm:ss"), text };
             var logitem = new ListViewItem(row);
             logitem.Font = new Font("Consolas", 10f);
@@ -163,7 +195,7 @@ namespace Hilo_v2
                 double betamount = response.data.hiloCashout.amount;
                 double profit = response.data.hiloCashout.payout - response.data.hiloCashout.amount;
                 double multiplier = response.data.hiloCashout.payoutMultiplier;
-                string cards = string.Join(",", list).Replace(",", ",");
+                string cards = string.Join(",", list);
                 string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
                 var betitem = new ListViewItem(row);
                 betitem.Font = new Font("Consolas", 10f);
@@ -196,7 +228,7 @@ namespace Hilo_v2
         }
         private async void LogIn()
         {
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -237,8 +269,14 @@ namespace Hilo_v2
                         this.Text += " - " + response.data.user.name;
                         textBox1.Enabled = false;
                         button1.Enabled = false;
+                        
+                        
+                        EditStatus("Logged in");
                         AddLog("Logged in");
                         loggedin = true;
+                        SetBalances(response);
+                        balance = balances[IndexCurrency()];
+                        UpdateStats();
                         activeHiloBet();
 
                     }
@@ -270,9 +308,20 @@ namespace Hilo_v2
                 loggedin = false;
             }
         }
+        private void SetBalances(ActiveData response)
+        {
+            
+            if (response.data.user != null)
+            {
+                for(var i = 0; i < response.data.user.balances.Count; i++)
+                {
+                    balances.Add(response.data.user.balances[i].available.amount);
+                }
+            }
+        }
         private async void activeHiloBet()
         {
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -308,31 +357,22 @@ namespace Hilo_v2
                     if (response.data.user.activeCasinoBet != null)
                     {
                         list.Add(response.data.user.activeCasinoBet.state.startCard.rank);
-                        listView1.Columns.Add(CardLayout(response.data.user.activeCasinoBet.state.startCard.rank, response.data.user.activeCasinoBet.state.startCard.suit));
-                        var start = new ListViewItem("Start");
-                        start.Font = new Font("Consolas", 10f);
-                        listView1.Items.Insert(0, start);
+                        string startcard = CardLayout(response.data.user.activeCasinoBet.state.startCard.rank, response.data.user.activeCasinoBet.state.startCard.suit);
+                        listBox1.Items.Add(startcard);
+                        
 
                         for (var i = 0; i < response.data.user.activeCasinoBet.state.rounds.Count; i++)
                         {
-                            list.Add(response.data.user.activeCasinoBet.state.rounds[i].card.rank);
-                            ColumnHeader head = new ColumnHeader();
-                            head.Text = CardLayout(response.data.user.activeCasinoBet.state.rounds[i].card.rank, response.data.user.activeCasinoBet.state.rounds[i].card.suit);
-                            listView1.Columns.Add(head);
-                            listView1.Columns[i].Width = 65;
-                            rowstr += response.data.user.activeCasinoBet.state.rounds[i].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x" + ",";
-                            string[] row = rowstr.Split(',');
-                            var listViewItem = new ListViewItem(row);
-                            listViewItem.Font = new Font("Consolas", 10f);
-
-                            listView1.Items.Insert(0, listViewItem);
-                            if (listView1.Items.Count > 1)
-                            {
-                                listView1.Items[1].Remove();
-                            }
+                            int nexts = i;
+                            list.Add(response.data.user.activeCasinoBet.state.rounds[nexts].card.rank);
+                            label2.Text = response.data.user.activeCasinoBet.state.rounds[nexts].payoutMultiplier.ToString("0.##").Replace(",", ".") + "x";
+                            string card = CardLayout(response.data.user.activeCasinoBet.state.rounds[nexts].card.rank, response.data.user.activeCasinoBet.state.rounds[nexts].card.suit);
+                            listBox1.Items.Add(card);
+                            listBox1.TopIndex = listBox1.Items.Count - 1;
+                            
+                            
 
                         }
-                        SendMessage(listView1.Handle, WM_HSCROLL, WPARAM, 0);
 
 
                     }
@@ -365,7 +405,7 @@ namespace Hilo_v2
             }
             if (run == 1)
             {
-                var url = "https://api.stake.com/graphql";
+                var url = mirror;
                 var request = new RestRequest(Method.POST);
                 var client = new RestClient(url);
                 Payload payload = new Payload();
@@ -417,7 +457,11 @@ namespace Hilo_v2
 
                             AddStartCard(response);
                             gamecount++;
-
+                            seedcount++;
+                            
+                            //profitall -= response.data.hiloBet.amount;
+                            //UpdateStats();
+                            totalwagered += response.data.hiloBet.amount;
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
                         }
@@ -481,7 +525,7 @@ namespace Hilo_v2
             }
             if (run == 1)
             {
-                var url = "https://api.stake.com/graphql";
+                var url = mirror;                
                 var request = new RestRequest(Method.POST);
                 var client = new RestClient(url);
                 Payload payload = new Payload();
@@ -585,7 +629,9 @@ namespace Hilo_v2
 
                                                 patternBox.Enabled = true;
                                                 ResetBaseAfterStop();
-                                                AddLog("Paused (Pause on pattern)");
+                                                var text = "Paused (Pause on pattern)";
+                                                AddLog(text);
+                                                EditStatus(text);
                                             }
 
                                         }
@@ -604,16 +650,26 @@ namespace Hilo_v2
                             }
                             else
                             {
-
+                                losecount++;
+                                losestreak++;
+                                highestloss.Add(losestreak);
+                                maxlosestreak = highestloss.Max();
+                                highestloss.Clear();
+                                highestloss.Add(maxlosestreak);
+                                winstreak = 0;
+                                seedlose++;
                                 BetList(response);
                                 ClearCards();
                                 profitall -= response.data.hiloNext.amount;
-                                ProfitShow(profitall);
+                                UpdateStats();
                                 if (IncrementLoss.Value > 1)
                                 {
                                     betamount *= IncrementLoss.Value;
                                 }
-
+                                if (SeedcheckBox.Checked == true && IsSeedRotate())
+                                {
+                                    await RotateSeed();
+                                }
                                 HiloBet();
                             }
                         }
@@ -664,7 +720,7 @@ namespace Hilo_v2
         private async void HiloCashout()
         {
 
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -706,9 +762,16 @@ namespace Hilo_v2
                     if (response.data.hiloCashout != null)
                     {
 
-
+                        wincount++;
+                        seedwins++;
+                        winstreak++;
+                        highestwin.Add(winstreak);
+                        maxwinstreak = highestwin.Max();
+                        highestwin.Clear();
+                        highestwin.Add(maxwinstreak);
+                        losestreak = 0;
                         profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
-                        ProfitShow(profitall);
+                        UpdateStats();
                         if (ResettoBaseWin.Checked == true)
                         {
                             betamount = BaseBetAmount.Value;
@@ -724,6 +787,11 @@ namespace Hilo_v2
                         }
                         else
                         {
+                            if(SeedcheckBox.Checked == true && IsSeedRotate()) 
+                            {
+                                await RotateSeed();
+                            }
+                            
                             HiloBet();
                         }
                     }
@@ -751,11 +819,38 @@ namespace Hilo_v2
                 HiloCashout();
             }
 
+        }
 
-
-
-
-
+        private bool IsSeedRotate()
+        {
+            if (seedcount >= Seedxbets.Value && Seedxbets.Value > 0)
+            {
+                seedcount = 0;
+                return true;
+            }
+            if (seedwins >= SeedxWin.Value && SeedxWin.Value > 0)
+            {
+                seedwins = 0;
+                return true;
+            }
+            if (seedlose >= SeedxLose.Value && SeedxLose.Value > 0)
+            {
+                seedlose = 0;
+                return true;
+            }
+            return false;
+        }
+        
+        public string RandomString(int length)
+        {
+            if(SeedBox3.TextLength > 0)
+            {
+                return SeedBox3.Text;
+            }
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -786,7 +881,7 @@ namespace Hilo_v2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (listView1.Items.Count == 0 && run == 0 && loggedin == true)
+            if (listBox1.Items.Count == 0 && run == 0 && loggedin == true)
             {
                 run = 1;
                 AddLog("Auto started");
@@ -1029,7 +1124,7 @@ namespace Hilo_v2
 
         private void ManualStart_Click(object sender, EventArgs e)
         {
-            if (run == 0 && listView1.Items.Count == 0 && loggedin == true)
+            if (run == 0 && listBox1.Items.Count == 0 && loggedin == true)
             {
                 ManualBet();
             }
@@ -1046,7 +1141,7 @@ namespace Hilo_v2
         private async void ManualBet()
         {
 
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -1098,6 +1193,7 @@ namespace Hilo_v2
                         AddStartCard(response);
                         
                         gamecount++;
+                        seedcount++;
                     }
                     else
                     {
@@ -1120,7 +1216,7 @@ namespace Hilo_v2
         private async void ManualNext(string guessed)
         {
 
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -1152,7 +1248,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             //button2.Enabled = true;
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
@@ -1179,9 +1275,15 @@ namespace Hilo_v2
                         {
                             BetList(response);
                             ClearCards();
-
+                            losecount++;
+                            winstreak = 0;
+                            losestreak++;
+                            highestloss.Add(losestreak);
+                            maxlosestreak = highestloss.Max();
+                            highestloss.Clear();
+                            highestloss.Add(maxlosestreak);
                             profitall -= response.data.hiloNext.amount;
-                            ProfitShow(profitall);
+                            UpdateStats();
                             patternBox.Enabled = true;
                         }
                                 
@@ -1214,7 +1316,7 @@ namespace Hilo_v2
         private async void ManualCashout()
         {
 
-            var url = "https://api.stake.com/graphql";
+            var url = mirror;
             var request = new RestRequest(Method.POST);
             var client = new RestClient(url);
             Payload payload = new Payload();
@@ -1245,7 +1347,7 @@ namespace Hilo_v2
                 },
 
             });
-            Debug.WriteLine(restResponse.Content);
+            //Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
                 if (response.errors == null)
@@ -1257,9 +1359,15 @@ namespace Hilo_v2
                         AddLog("Manual Cashout");
                         BetList(response);
                         ClearCards();
-
+                        wincount++;
+                        losestreak = 0;
+                        winstreak++;
+                        highestwin.Add(losestreak);
+                        maxwinstreak = highestwin.Max();
+                        highestwin.Clear();
+                        highestwin.Add(maxwinstreak);
                         profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
-                        ProfitShow(profitall);
+                        UpdateStats();
                         betamount = BaseBetAmount.Value;
 
                         patternBox.Enabled = true;
@@ -1291,7 +1399,71 @@ namespace Hilo_v2
         }
 
 
+        private async Task RotateSeed()
+        {
 
+            var url = mirror;
+            var request = new RestRequest(Method.POST);
+            var client = new RestClient(url);
+            Payload payload = new Payload();
+            payload.operationName = "RotateSeedPair";
+            payload.variables = new betobj()
+            {
+                seed = RandomString(10)
+            };
+            payload.query = "mutation RotateSeedPair($seed: String!) {\n  rotateSeedPair(seed: $seed) {\n    clientSeed {\n      user {\n        id\n        activeClientSeed {\n          id\n          seed\n          __typename\n        }\n        activeServerSeed {\n          id\n          nonce\n          seedHash\n          nextSeedHash\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n";
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("x-access-token", token);
+
+            request.AddParameter("application/json", JsonConvert.SerializeObject(payload), ParameterType.RequestBody);
+            //request.AddJsonBody(payload);
+            //IRestResponse response = client.Execute(request);
+
+            var restResponse =
+                await client.ExecuteAsync(request);
+
+            // Will output the HTML contents of the requested page
+            //Debug.WriteLine(restResponse.Content);
+            Data response = JsonConvert.DeserializeObject<Data>(restResponse.Content, new JsonSerializerSettings
+            {
+                Error = delegate (object sender, ErrorEventArgs args)
+                {
+                    EditStatus("Bad response from server");
+                    args.ErrorContext.Handled = true;
+                },
+
+            });
+            //Debug.WriteLine(restResponse.Content);
+            if (restResponse.StatusCode == HttpStatusCode.OK)
+            {
+                if (response.errors == null)
+                {
+
+                    if (response.data.rotateSeedPair != null)
+                    {
+
+                        AddLog("Seed changed");
+                        
+
+                    }
+                    else
+                    {
+                        EditStatus("RotateSeed: No response data");
+                    }
+                }
+                else
+                {
+  
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
+                }
+            }
+            else
+            {
+                EditStatus("Change seed failed. (Code:" + restResponse.StatusCode + ")");
+
+            }
+        }
 
         private bool PatternMatch(int[] arr)
         {
@@ -1332,6 +1504,7 @@ namespace Hilo_v2
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            Properties.Settings.Default.checkBox1 = checkBox1.Checked;
             if (checkBox1.Checked == true)
             {
                 pauseonpattern = true;
@@ -1344,18 +1517,13 @@ namespace Hilo_v2
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (CashoutcheckBox2.Checked == true)
-            {
-                AutoCashout.Enabled = true;
-            }
-            else
-            {
-                AutoCashout.Enabled = false;
-            }
+            Properties.Settings.Default.CashoutcheckBox2 = CashoutcheckBox2.Checked;
+
         }
 
         private void StopWincheckBox2_CheckedChanged(object sender, EventArgs e)
         {
+            Properties.Settings.Default.StopWincheckBox2 = StopWincheckBox2.Checked;
             if (StopWincheckBox2.Checked == true)
             {
                 stopafterwin = true;
@@ -1368,14 +1536,15 @@ namespace Hilo_v2
 
         private void StopAutocheckBox2_CheckedChanged(object sender, EventArgs e)
         {
+            Properties.Settings.Default.StopAutocheckBox2 = StopAutocheckBox2.Checked;
             if (StopAutocheckBox2.Checked == true)
             {
-                StopAutoValue.Enabled = true;
+                
                 stopaftermulti = true;
             }
             else
             {
-                StopAutoValue.Enabled = false;
+                
                 stopaftermulti = false;
             }
         }
@@ -1391,7 +1560,26 @@ namespace Hilo_v2
             DelayBet.Value = Properties.Settings.Default.betdeley;
             DelayGuess.Value = Properties.Settings.Default.guessdelay;
             StopLimit.Value = Properties.Settings.Default.gamecountstop;
+            StopAutocheckBox2.Checked = Properties.Settings.Default.StopAutocheckBox2;
+            StopWincheckBox2.Checked = Properties.Settings.Default.StopWincheckBox2;
+            CashoutcheckBox2.Checked = Properties.Settings.Default.CashoutcheckBox2;
+            checkBox1.Checked = Properties.Settings.Default.checkBox1;
+
+            PauseMulticheckBox.Checked = Properties.Settings.Default.PauseMulticheckBox;
+            SeedcheckBox.Checked = Properties.Settings.Default.SeedcheckBox;
+            StopAutoValue.Value = Properties.Settings.Default.StopAutoValue;
+            AutoCashout.Value = Properties.Settings.Default.AutoCashout;
+            PauseMulti.Value = Properties.Settings.Default.PauseMulti;
+            IncrementLoss.Value = Properties.Settings.Default.IncrementLoss;
+            ResettoBaseWin.Checked = Properties.Settings.Default.ResettoBaseWin;
+            ResetBaseStop.Checked = Properties.Settings.Default.ResetBaseStop;
+            Seedxbets.Value = Properties.Settings.Default.Seedxbets;
+            SeedxLose.Value = Properties.Settings.Default.SeedxLose ;
+            SeedxWin.Value = Properties.Settings.Default.SeedxWin;
+            comboBox1.Text = Properties.Settings.Default.Mirror;
+
         }
+
        
         private void rankBox_TextChanged(object sender, EventArgs e)
         {
@@ -1410,10 +1598,30 @@ namespace Hilo_v2
                 EditStatus("You may type only H, C, D or S as suit");
             }
         }
+        private int IndexCurrency()
+        {
+            for(var i = 0; i < CurrencyList.Items.Count; i++)
+            {
+                if (CurrencyList.Items[i].ToString() == CurrencyList.Text)
+                {
+                    return i;
+                }
 
+            }
+            return 0;
+        }
         private void CurrencyList_SelectedIndexChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.currency = CurrencyList.Text;
+            if (loggedin)
+            {
+                
+                ResetStats();
+                currencyindex = CurrencyList.SelectedIndex;
+                balance = balances[CurrencyList.SelectedIndex];
+                UpdateStats();
+            }
+            
         }
 
         private void StopLimit_ValueChanged(object sender, EventArgs e)
@@ -1438,8 +1646,80 @@ namespace Hilo_v2
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            profitall = 0;
-            ProfitShow(profitall);
+            ResetStats();
+        }
+
+        private void PauseMulticheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PauseMulticheckBox = PauseMulticheckBox.Checked;
+
+        }
+
+        private void SeedcheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SeedcheckBox = SeedcheckBox.Checked;
+        }
+
+        private void StopAutoValue_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.StopAutoValue = StopAutoValue.Value;
+        }
+
+        private void AutoCashout_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.AutoCashout = AutoCashout.Value;
+        }
+
+        private void PauseMulti_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PauseMulti = PauseMulti.Value;
+        }
+
+        private void IncrementLoss_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.IncrementLoss = IncrementLoss.Value;
+        }
+
+        private void ResettoBaseWin_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ResettoBaseWin = ResettoBaseWin.Checked;
+        }
+
+        private void ResetBaseStop_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ResetBaseStop = ResetBaseStop.Checked;
+        }
+
+        private void Seedxbets_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Seedxbets = Seedxbets.Value;
+        }
+
+        private void SeedxLose_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SeedxLose = SeedxLose.Value;
+        }
+
+        private void SeedxWin_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SeedxWin = SeedxWin.Value;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Mirror = comboBox1.Text;
+            mirror = "https://api." + comboBox1.Text + "/graphql";
+            AddLog("Site changed to: " + comboBox1.Text);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.clientseed = SeedBox3.Text;
+        }
+
+        private void labelProfit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -130,5 +130,209 @@ namespace Hilo_v2.Properties {
                 this["gamecountstop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SeedcheckBox {
+            get {
+                return ((bool)(this["SeedcheckBox"]));
+            }
+            set {
+                this["SeedcheckBox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public decimal StopAutoValue {
+            get {
+                return ((decimal)(this["StopAutoValue"]));
+            }
+            set {
+                this["StopAutoValue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal AutoCashout {
+            get {
+                return ((decimal)(this["AutoCashout"]));
+            }
+            set {
+                this["AutoCashout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal PauseMulti {
+            get {
+                return ((decimal)(this["PauseMulti"]));
+            }
+            set {
+                this["PauseMulti"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal IncrementLoss {
+            get {
+                return ((decimal)(this["IncrementLoss"]));
+            }
+            set {
+                this["IncrementLoss"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ResettoBaseWin {
+            get {
+                return ((bool)(this["ResettoBaseWin"]));
+            }
+            set {
+                this["ResettoBaseWin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ResetBaseStop {
+            get {
+                return ((bool)(this["ResetBaseStop"]));
+            }
+            set {
+                this["ResetBaseStop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public decimal Seedxbets {
+            get {
+                return ((decimal)(this["Seedxbets"]));
+            }
+            set {
+                this["Seedxbets"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal SeedxLose {
+            get {
+                return ((decimal)(this["SeedxLose"]));
+            }
+            set {
+                this["SeedxLose"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal SeedxWin {
+            get {
+                return ((decimal)(this["SeedxWin"]));
+            }
+            set {
+                this["SeedxWin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PauseMulticheckBox {
+            get {
+                return ((bool)(this["PauseMulticheckBox"]));
+            }
+            set {
+                this["PauseMulticheckBox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CashoutcheckBox2 {
+            get {
+                return ((bool)(this["CashoutcheckBox2"]));
+            }
+            set {
+                this["CashoutcheckBox2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StopAutocheckBox2 {
+            get {
+                return ((bool)(this["StopAutocheckBox2"]));
+            }
+            set {
+                this["StopAutocheckBox2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBox1 {
+            get {
+                return ((bool)(this["checkBox1"]));
+            }
+            set {
+                this["checkBox1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StopWincheckBox2 {
+            get {
+                return ((bool)(this["StopWincheckBox2"]));
+            }
+            set {
+                this["StopWincheckBox2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("stake.com")]
+        public string Mirror {
+            get {
+                return ((string)(this["Mirror"]));
+            }
+            set {
+                this["Mirror"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string clientseed {
+            get {
+                return ((string)(this["clientseed"]));
+            }
+            set {
+                this["clientseed"] = value;
+            }
+        }
     }
 }

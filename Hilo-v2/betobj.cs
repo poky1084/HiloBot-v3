@@ -14,6 +14,7 @@ namespace Hilo_v2
         public string game { get; set; }
         public string guess { get; set; }
         public Card startCard { get; set; }
+        public string seed { get; set; }
     }
     public class Card
     {
@@ -47,12 +48,22 @@ namespace Hilo_v2
         public string id { get; set; }
         public string name { get; set; }
         public Hilobet activeCasinoBet { get; set; }
+        public List<Balances> balances { get; set; }
+    }
+    public class Balances
+    {
+        public Available available { get; set; }
+    }
+    public class Available
+    {
+        public double amount { get; set; }
     }
     public class Betdata
     {
         public Hilobet hiloBet { get; set; }
         public Hilobet hiloNext { get; set; }
         public Hilobet hiloCashout { get; set; }
+        public object rotateSeedPair { get; set; }
     }
     public class Hilobet
     {
