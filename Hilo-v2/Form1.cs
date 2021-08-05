@@ -469,7 +469,7 @@ namespace Hilo_v2
                             seedcount++;
                             afterbetsmade++;
 
-                            //profitall -= response.data.hiloBet.amount;
+                            profitall -= response.data.hiloBet.amount;
                             //UpdateStats();
                             totalwagered += response.data.hiloBet.amount;
                             var guess = Pattern(list.Count - 1);
@@ -681,7 +681,7 @@ namespace Hilo_v2
                                 afterlosestreaks = losestreak;
                                 BetList(response);
                                 ClearCards();
-                                profitall -= response.data.hiloNext.amount;
+                                //profitall -= response.data.hiloNext.amount;
                                 UpdateStats();
                                 if (IncrementLoss.Value > 1)
                                 {
@@ -808,7 +808,7 @@ namespace Hilo_v2
                         losestreak = 0;
                         afterwinsof++;
                         afterwinstreaks = winstreak;
-                        profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
+                        profitall += response.data.hiloCashout.payout;
                         UpdateStats();
                         if (betIncrement.Value > 1 && afterbetsmade >= afterbetsOf.Value && afterbetsOf.Value > 0)
                         {
@@ -1243,7 +1243,7 @@ namespace Hilo_v2
                         AddLog("Manual started");
                         ClearCards();
                         AddStartCard(response);
-                        
+                        profitall -= response.data.hiloBet.amount;
                         gamecount++;
                         seedcount++;
                     }
@@ -1334,7 +1334,7 @@ namespace Hilo_v2
                             maxlosestreak = highestloss.Max();
                             highestloss.Clear();
                             highestloss.Add(maxlosestreak);
-                            profitall -= response.data.hiloNext.amount;
+                            //profitall -= response.data.hiloNext.amount;
                             UpdateStats();
                             patternBox.Enabled = true;
                         }
@@ -1418,7 +1418,7 @@ namespace Hilo_v2
                         maxwinstreak = highestwin.Max();
                         highestwin.Clear();
                         highestwin.Add(maxwinstreak);
-                        profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
+                        profitall += response.data.hiloCashout.payout;
                         UpdateStats();
                         betamount = BaseBetAmount.Value;
 
