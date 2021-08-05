@@ -381,6 +381,7 @@ namespace Hilo_v2
                             
 
                         }
+                        CurrencyList.Text = response.data.user.activeCasinoBet.currency;
 
 
                     }
