@@ -1513,7 +1513,7 @@ namespace Hilo_v2
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.Text = "Stake.com | HiLo";
+            this.Text = "HiLo";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.ManualPage.ResumeLayout(false);

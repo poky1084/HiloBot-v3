@@ -470,8 +470,9 @@ namespace Hilo_v2
                             afterbetsmade++;
 
                             profitall -= response.data.hiloBet.amount;
-                            UpdateStats();
+                            
                             totalwagered += response.data.hiloBet.amount;
+                            UpdateStats();
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
                         }
@@ -1244,8 +1245,9 @@ namespace Hilo_v2
                         ClearCards();
                         AddStartCard(response);
                         profitall -= response.data.hiloBet.amount;
-                        UpdateStats();
+                        
                         totalwagered += response.data.hiloBet.amount;
+                        UpdateStats();
                         gamecount++;
                         seedcount++;
                     }
