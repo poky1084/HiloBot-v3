@@ -131,7 +131,9 @@ namespace Hilo_v2
             wincount = 0;
             losecount = 0;
             losestreak = 0;
+
             winstreak = 0;
+           
             highestwin.Clear();
             highestloss.Clear();
             maxlosestreak = 0;
@@ -678,9 +680,10 @@ namespace Hilo_v2
                                 highestloss.Clear();
                                 highestloss.Add(maxlosestreak);
                                 winstreak = 0;
+                                afterwinstreaks = 0;
                                 seedlose++;
                                 afterlossmade++;
-                                afterlosestreaks = losestreak;
+                                afterlosestreaks++;
                                 BetList(response);
                                 ClearCards();
                                 //profitall -= response.data.hiloNext.amount;
@@ -809,7 +812,9 @@ namespace Hilo_v2
                         highestwin.Add(maxwinstreak);
                         losestreak = 0;
                         afterwinsof++;
-                        afterwinstreaks = winstreak;
+                        afterlosestreaks = 0;
+                        afterwinstreaks++;
+                        afterlossmade = 0;
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
                         
@@ -1336,6 +1341,8 @@ namespace Hilo_v2
                             losecount++;
                             winstreak = 0;
                             losestreak++;
+                            afterlosestreaks++;
+                            afterwinstreaks = 0;
                             highestloss.Add(losestreak);
                             maxlosestreak = highestloss.Max();
                             highestloss.Clear();
@@ -1419,7 +1426,10 @@ namespace Hilo_v2
                         ClearCards();
                         wincount++;
                         losestreak = 0;
+                        afterlosestreaks = 0;
                         winstreak++;
+                        afterwinstreaks++;
+                        afterlossmade = 0;
                         highestwin.Add(losestreak);
                         maxwinstreak = highestwin.Max();
                         highestwin.Clear();
