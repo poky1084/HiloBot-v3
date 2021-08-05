@@ -1244,6 +1244,8 @@ namespace Hilo_v2
                         ClearCards();
                         AddStartCard(response);
                         profitall -= response.data.hiloBet.amount;
+                        UpdateStats();
+                        totalwagered += response.data.hiloBet.amount;
                         gamecount++;
                         seedcount++;
                     }
