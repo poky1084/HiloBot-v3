@@ -39,9 +39,10 @@ namespace Hilo_v2
         decimal betamount = 0;
         string rowstr = "Start,";
         int gamecount = 0;
+        int stopafterbets = 0;
         int afterwinsof = 0;
         int afterwinstreaks = 0;
-        int afterbetsmade = 0;
+        int afterbetsincr = 0;
         int afterlossmade = 0;
         int afterlosestreaks = 0;
         int seedcount = 0;
@@ -404,13 +405,13 @@ namespace Hilo_v2
             {
                 await Task.Delay((int)DelayBet.Value);
             }
-            if(StopLimit.Value > 0 && gamecount >= StopLimit.Value)
+            if(StopLimit.Value > 0 && stopafterbets >= StopLimit.Value)
             {
                 run = 0;
-                
+                stopafterbets = 0;
                 AddLog("Auto stopped");
                 EditStatus("Auto stopped. (Stop after games)");
-                gamecount = 0;
+                //gamecount = 0;
             }
             if (run == 1)
             {
@@ -467,8 +468,8 @@ namespace Hilo_v2
                             AddStartCard(response);
                             gamecount++;
                             seedcount++;
-                            afterbetsmade++;
-
+                            afterbetsincr++;
+                            stopafterbets++;
                             profitall -= response.data.hiloBet.amount;
                             
                             totalwagered += response.data.hiloBet.amount;
@@ -688,9 +689,9 @@ namespace Hilo_v2
                                 {
                                     //betamount *= IncrementLoss.Value;
                                 }
-                                if (betIncrement.Value > 1 && afterbetsmade >= afterbetsOf.Value && afterbetsOf.Value > 0)
+                                if (betIncrement.Value > 1 && afterbetsincr >= afterbetsOf.Value && afterbetsOf.Value > 0)
                                 {
-                                    afterbetsmade = 0;
+                                    afterbetsincr = 0;
                                     betamount *= betIncrement.Value;
                                 }
                                 if (lossesIncrement.Value > 1 && afterlossmade >= afterlossesOf.Value && afterlossesOf.Value > 0)
@@ -811,11 +812,7 @@ namespace Hilo_v2
                         afterwinstreaks = winstreak;
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
-                        if (betIncrement.Value > 1 && afterbetsmade >= afterbetsOf.Value && afterbetsOf.Value > 0)
-                        {
-                            afterbetsmade = 0;
-                            betamount *= betIncrement.Value;
-                        }
+                        
                         if (ResettoBaseWin.Checked == true && afterwinsof >= resetBasewinsOf.Value)
                         {
 
@@ -828,7 +825,11 @@ namespace Hilo_v2
                             afterwinstreaks = 0;
                             betamount = BaseBetAmount.Value;
                         }
-
+                        if (betIncrement.Value > 1 && afterbetsincr >= afterbetsOf.Value && afterbetsOf.Value > 0)
+                        {
+                            afterbetsincr = 0;
+                            betamount *= betIncrement.Value;
+                        }
                         BetList(response);
                         ClearCards();
                         if (stopafterwin)
@@ -1249,6 +1250,7 @@ namespace Hilo_v2
                         totalwagered += response.data.hiloBet.amount;
                         UpdateStats();
                         gamecount++;
+                        stopafterbets++;
                         seedcount++;
                     }
                     else

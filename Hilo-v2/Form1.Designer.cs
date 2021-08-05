@@ -1014,9 +1014,10 @@ namespace Hilo_v2
             // 
             // ManualEqual_btn
             // 
-            this.ManualEqual_btn.Location = new System.Drawing.Point(88, 49);
+            this.ManualEqual_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ManualEqual_btn.Location = new System.Drawing.Point(88, 58);
             this.ManualEqual_btn.Name = "ManualEqual_btn";
-            this.ManualEqual_btn.Size = new System.Drawing.Size(64, 32);
+            this.ManualEqual_btn.Size = new System.Drawing.Size(85, 52);
             this.ManualEqual_btn.TabIndex = 11;
             this.ManualEqual_btn.Text = "Equal";
             this.ManualEqual_btn.UseVisualStyleBackColor = true;
@@ -1024,9 +1025,9 @@ namespace Hilo_v2
             // 
             // ManualStart
             // 
-            this.ManualStart.Location = new System.Drawing.Point(19, 127);
+            this.ManualStart.Location = new System.Drawing.Point(3, 149);
             this.ManualStart.Name = "ManualStart";
-            this.ManualStart.Size = new System.Drawing.Size(134, 30);
+            this.ManualStart.Size = new System.Drawing.Size(171, 30);
             this.ManualStart.TabIndex = 10;
             this.ManualStart.Text = "Start Manual";
             this.ManualStart.UseVisualStyleBackColor = true;
@@ -1066,9 +1067,10 @@ namespace Hilo_v2
             // 
             this.ManualCashout_btn.BackColor = System.Drawing.Color.SteelBlue;
             this.ManualCashout_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ManualCashout_btn.Location = new System.Drawing.Point(19, 86);
+            this.ManualCashout_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ManualCashout_btn.Location = new System.Drawing.Point(4, 112);
             this.ManualCashout_btn.Name = "ManualCashout_btn";
-            this.ManualCashout_btn.Size = new System.Drawing.Size(134, 36);
+            this.ManualCashout_btn.Size = new System.Drawing.Size(169, 36);
             this.ManualCashout_btn.TabIndex = 3;
             this.ManualCashout_btn.Text = "Cashout";
             this.ManualCashout_btn.UseVisualStyleBackColor = false;
@@ -1076,9 +1078,10 @@ namespace Hilo_v2
             // 
             // ManualLow
             // 
-            this.ManualLow.Location = new System.Drawing.Point(19, 49);
+            this.ManualLow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ManualLow.Location = new System.Drawing.Point(3, 58);
             this.ManualLow.Name = "ManualLow";
-            this.ManualLow.Size = new System.Drawing.Size(64, 32);
+            this.ManualLow.Size = new System.Drawing.Size(84, 52);
             this.ManualLow.TabIndex = 2;
             this.ManualLow.Text = "Lower";
             this.ManualLow.UseVisualStyleBackColor = true;
@@ -1086,9 +1089,10 @@ namespace Hilo_v2
             // 
             // ManualSkip
             // 
-            this.ManualSkip.Location = new System.Drawing.Point(88, 10);
+            this.ManualSkip.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ManualSkip.Location = new System.Drawing.Point(88, 8);
             this.ManualSkip.Name = "ManualSkip";
-            this.ManualSkip.Size = new System.Drawing.Size(64, 33);
+            this.ManualSkip.Size = new System.Drawing.Size(85, 48);
             this.ManualSkip.TabIndex = 1;
             this.ManualSkip.Text = "Skip";
             this.ManualSkip.UseVisualStyleBackColor = true;
@@ -1096,9 +1100,10 @@ namespace Hilo_v2
             // 
             // ManualHigh
             // 
-            this.ManualHigh.Location = new System.Drawing.Point(19, 10);
+            this.ManualHigh.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ManualHigh.Location = new System.Drawing.Point(3, 8);
             this.ManualHigh.Name = "ManualHigh";
-            this.ManualHigh.Size = new System.Drawing.Size(64, 33);
+            this.ManualHigh.Size = new System.Drawing.Size(84, 48);
             this.ManualHigh.TabIndex = 0;
             this.ManualHigh.Text = "Higher";
             this.ManualHigh.UseVisualStyleBackColor = true;
