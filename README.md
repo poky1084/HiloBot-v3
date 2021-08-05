@@ -1,4 +1,4 @@
-# Hilo-v2
+# HiloBot-v3
 
 ![GitHub all releases](https://img.shields.io/github/downloads/poky1084/HiloBot-v3/total)
 
