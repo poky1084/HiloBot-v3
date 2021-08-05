@@ -1046,7 +1046,7 @@ namespace Hilo_v2
                     guess = "equal";
                     return guess;
                 case 3:
-                    string[] vote = { "equal", "lower", "higher", "higherEqual", "lowerEqual" };
+                    string[] vote = { "equal", "higherEqual", "lowerEqual" };
                     string[] voteA = { "equal", "higher" };
                     string[] voteK = { "equal", "lower" };
                     Random rnd = new Random();
