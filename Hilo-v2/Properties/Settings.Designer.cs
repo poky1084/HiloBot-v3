@@ -334,5 +334,113 @@ namespace Hilo_v2.Properties {
                 this["clientseed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal betIncrement {
+            get {
+                return ((decimal)(this["betIncrement"]));
+            }
+            set {
+                this["betIncrement"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal afterbetsOf {
+            get {
+                return ((decimal)(this["afterbetsOf"]));
+            }
+            set {
+                this["afterbetsOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal lossesIncrement {
+            get {
+                return ((decimal)(this["lossesIncrement"]));
+            }
+            set {
+                this["lossesIncrement"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal afterlossesOf {
+            get {
+                return ((decimal)(this["afterlossesOf"]));
+            }
+            set {
+                this["afterlossesOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal losesteakIncrement {
+            get {
+                return ((decimal)(this["losesteakIncrement"]));
+            }
+            set {
+                this["losesteakIncrement"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal afterlosetreakOf {
+            get {
+                return ((decimal)(this["afterlosetreakOf"]));
+            }
+            set {
+                this["afterlosetreakOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal resetBasewinstreakOf {
+            get {
+                return ((decimal)(this["resetBasewinstreakOf"]));
+            }
+            set {
+                this["resetBasewinstreakOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ResetBasewinstreakcheckBox2 {
+            get {
+                return ((bool)(this["ResetBasewinstreakcheckBox2"]));
+            }
+            set {
+                this["ResetBasewinstreakcheckBox2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal resetBasewinsOf {
+            get {
+                return ((decimal)(this["resetBasewinsOf"]));
+            }
+            set {
+                this["resetBasewinsOf"] = value;
+            }
+        }
     }
 }

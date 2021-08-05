@@ -9,7 +9,7 @@ namespace Hilo_v2
     public class betobj
     {
         public string identifier { get; set; }
-        public double amount { get; set; }
+        public decimal amount { get; set; }
         public string currency { get; set; }
         public string game { get; set; }
         public string guess { get; set; }
@@ -56,7 +56,7 @@ namespace Hilo_v2
     }
     public class Available
     {
-        public double amount { get; set; }
+        public decimal amount { get; set; }
     }
     public class Betdata
     {
@@ -70,8 +70,8 @@ namespace Hilo_v2
         public string id { get; set; }
         public string iid { get; set; }
         public double payoutMultiplier { get; set; }
-        public double amount { get; set; }
-        public double payout { get; set; }
+        public decimal amount { get; set; }
+        public decimal payout { get; set; }
         public string updatedAt { get; set; }
         public string currency { get; set; }
         public Active user { get; set; }

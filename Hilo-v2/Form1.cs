@@ -30,7 +30,7 @@ namespace Hilo_v2
         string mirror = "https://api.stake.com/graphql";
         bool loggedin = false;
         int run = 0;
-        double profitall = 0;
+        decimal profitall = 0;
         bool pauseonpattern = false;
         bool stopaftermulti = false;
         List<string> list = new List<string>();
@@ -39,6 +39,11 @@ namespace Hilo_v2
         decimal betamount = 0;
         string rowstr = "Start,";
         int gamecount = 0;
+        int afterwinsof = 0;
+        int afterwinstreaks = 0;
+        int afterbetsmade = 0;
+        int afterlossmade = 0;
+        int afterlosestreaks = 0;
         int seedcount = 0;
         int seedwins = 0;
         int seedlose = 0;
@@ -48,13 +53,13 @@ namespace Hilo_v2
         int losecount = 0;
         int losestreak = 0;
         int winstreak = 0;
-        double totalwagered = 0;
+        decimal totalwagered = 0;
         int maxlosestreak = 0;
         int maxwinstreak = 0;
         List<int> highestloss = new List<int>();
         List<int> highestwin = new List<int>();
-        List<double> balances = new List<double>();
-        double balance = 0;
+        List<decimal> balances = new List<decimal>();
+        decimal balance = 0;
         int currencyindex = 0;
         private void Application_ApplicationExit(object sender, EventArgs e)
         { 
@@ -112,7 +117,10 @@ namespace Hilo_v2
             labelWinstreak.Text = winstreak.ToString() + " | Highest "+maxwinstreak;
             labelLosses.Text = losecount.ToString();
             labelLosestreak.Text = losestreak.ToString() + " | Highest " +maxlosestreak;
-            
+
+            mainBalance.Text = balances[IndexCurrency()].ToString("0.00000000") + " " + CurrencyList.Text;
+            mainProfit.Text = profitall.ToString("0.00000000").Replace("-", "−") + " " + CurrencyList.Text;
+            mainWager.Text = totalwagered.ToString("0.00000000") + " " + CurrencyList.Text;
         }
         private void ResetStats()
         {
@@ -192,8 +200,8 @@ namespace Hilo_v2
         {
             if (response.data.hiloCashout != null && response.data != null)
             {
-                double betamount = response.data.hiloCashout.amount;
-                double profit = response.data.hiloCashout.payout - response.data.hiloCashout.amount;
+                decimal betamount = response.data.hiloCashout.amount;
+                decimal profit = response.data.hiloCashout.payout - response.data.hiloCashout.amount;
                 double multiplier = response.data.hiloCashout.payoutMultiplier;
                 string cards = string.Join(",", list);
                 string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
@@ -212,8 +220,8 @@ namespace Hilo_v2
             }
             else if(response.data.hiloNext != null)
             {
-                double betamount = response.data.hiloNext.amount;
-                double profit = -response.data.hiloNext.amount;
+                decimal betamount = response.data.hiloNext.amount;
+                decimal profit = -response.data.hiloNext.amount;
                 double multiplier = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
                 string cards = string.Join(",", list).Replace(",", " ");
                 string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
@@ -413,7 +421,7 @@ namespace Hilo_v2
                 payload.variables = new betobj()
                 {
                     currency = CurrencyList.Text,
-                    amount = (double)betamount,
+                    amount = betamount,
                     startCard = new Card()
                     {
                         suit = suitBox.Text,
@@ -458,7 +466,8 @@ namespace Hilo_v2
                             AddStartCard(response);
                             gamecount++;
                             seedcount++;
-                            
+                            afterbetsmade++;
+
                             //profitall -= response.data.hiloBet.amount;
                             //UpdateStats();
                             totalwagered += response.data.hiloBet.amount;
@@ -667,13 +676,30 @@ namespace Hilo_v2
                                 highestloss.Add(maxlosestreak);
                                 winstreak = 0;
                                 seedlose++;
+                                afterlossmade++;
+                                afterlosestreaks = losestreak;
                                 BetList(response);
                                 ClearCards();
                                 profitall -= response.data.hiloNext.amount;
                                 UpdateStats();
                                 if (IncrementLoss.Value > 1)
                                 {
-                                    betamount *= IncrementLoss.Value;
+                                    //betamount *= IncrementLoss.Value;
+                                }
+                                if (betIncrement.Value > 1 && afterbetsmade >= afterbetsOf.Value && afterbetsOf.Value > 0)
+                                {
+                                    afterbetsmade = 0;
+                                    betamount *= betIncrement.Value;
+                                }
+                                if (lossesIncrement.Value > 1 && afterlossmade >= afterlossesOf.Value && afterlossesOf.Value > 0)
+                                {
+                                    afterlossmade = 0;
+                                    betamount *= lossesIncrement.Value;
+                                }
+                                if(losesteakIncrement.Value > 1 && afterlosestreaks >= afterlosetreakOf.Value && afterlosetreakOf.Value > 0)
+                                {
+                                    afterlosestreaks = 0;
+                                    betamount *= losesteakIncrement.Value;
                                 }
                                 if (SeedcheckBox.Checked == true && IsSeedRotate())
                                 {
@@ -779,12 +805,28 @@ namespace Hilo_v2
                         highestwin.Clear();
                         highestwin.Add(maxwinstreak);
                         losestreak = 0;
+                        afterwinsof++;
+                        afterwinstreaks = winstreak;
                         profitall += response.data.hiloCashout.payout - response.data.hiloCashout.amount;
                         UpdateStats();
-                        if (ResettoBaseWin.Checked == true)
+                        if (betIncrement.Value > 1 && afterbetsmade >= afterbetsOf.Value && afterbetsOf.Value > 0)
                         {
+                            afterbetsmade = 0;
+                            betamount *= betIncrement.Value;
+                        }
+                        if (ResettoBaseWin.Checked == true && afterwinsof >= resetBasewinsOf.Value)
+                        {
+
+                            afterwinsof = 0;
+                            betamount = BaseBetAmount.Value;
+
+                        }
+                        if(ResetBasewinstreakcheckBox2.Checked == true && afterwinstreaks >= resetBasewinstreakOf.Value)
+                        {
+                            afterwinstreaks = 0;
                             betamount = BaseBetAmount.Value;
                         }
+
                         BetList(response);
                         ClearCards();
                         if (stopafterwin)
@@ -1158,7 +1200,7 @@ namespace Hilo_v2
             payload.variables = new betobj()
             {
                 currency = CurrencyList.Text,
-                amount = (double)betamount,
+                amount = betamount,
                 startCard = new Card()
                 {
                     suit = suitBox.Text,
@@ -1587,7 +1629,20 @@ namespace Hilo_v2
             SeedxWin.Value = Properties.Settings.Default.SeedxWin;
             comboBox1.Text = Properties.Settings.Default.Mirror;
             SeedBox3.Text = Properties.Settings.Default.clientseed;
+
+            afterlosetreakOf.Value = Properties.Settings.Default.afterlosetreakOf;
+            betIncrement.Value = Properties.Settings.Default.betIncrement;
+            afterbetsOf.Value = Properties.Settings.Default.afterbetsOf;
+            lossesIncrement.Value = Properties.Settings.Default.lossesIncrement;
+            afterlossesOf.Value = Properties.Settings.Default.afterlossesOf;
+            losesteakIncrement.Value = Properties.Settings.Default.losesteakIncrement;
+            resetBasewinstreakOf.Value = Properties.Settings.Default.resetBasewinstreakOf;
+            ResetBasewinstreakcheckBox2.Checked = Properties.Settings.Default.ResetBasewinstreakcheckBox2 ;
+            resetBasewinsOf.Value = Properties.Settings.Default.resetBasewinsOf;
         }
+
+
+
 
        
         private void rankBox_TextChanged(object sender, EventArgs e)
@@ -1729,6 +1784,76 @@ namespace Hilo_v2
         private void labelProfit_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (linkLabel2.Text.Contains("Hide"))
+            {
+                linkLabel2.Text = "Show Stats";
+                label30.Visible = false;
+                label31.Visible = false;
+                label32.Visible = false;
+                mainBalance.Visible = false;
+                mainProfit.Visible = false;
+                mainWager.Visible = false;
+            }
+            else
+            {
+                linkLabel2.Text = "Hide Stats";
+                label30.Visible = true;
+                label31.Visible = true;
+                label32.Visible = true;
+                mainBalance.Visible = true;
+                mainProfit.Visible = true;
+                mainWager.Visible = true;
+            }
+            
+        }
+
+        private void betIncrement_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.betIncrement = betIncrement.Value;
+        }
+
+        private void afterbetsOf_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.afterbetsOf = afterbetsOf.Value;
+        }
+
+        private void lossesIncrement_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.lossesIncrement = lossesIncrement.Value;
+        }
+
+        private void afterlossesOf_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.afterlossesOf = afterlossesOf.Value;
+        }
+
+        private void losesteakIncrement_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.losesteakIncrement = losesteakIncrement.Value;
+        }
+
+        private void afterlosetreakOf_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.afterlosetreakOf = afterlosetreakOf.Value;
+        }
+        //wins reset
+        private void resetBasewinstreakOf_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.resetBasewinstreakOf = resetBasewinstreakOf.Value;
+        }
+
+        private void ResetBasewinstreakcheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ResetBasewinstreakcheckBox2 = ResetBasewinstreakcheckBox2.Checked;
+        }
+
+        private void resetBasewinsOf_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.resetBasewinsOf = resetBasewinsOf.Value;
         }
     }
 }
