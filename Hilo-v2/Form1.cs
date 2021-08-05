@@ -470,7 +470,7 @@ namespace Hilo_v2
                             afterbetsmade++;
 
                             profitall -= response.data.hiloBet.amount;
-                            //UpdateStats();
+                            UpdateStats();
                             totalwagered += response.data.hiloBet.amount;
                             var guess = Pattern(list.Count - 1);
                             HiloNext(guess);
