@@ -157,6 +157,7 @@ namespace Hilo_v2
             this.stopIfProfitOver = new System.Windows.Forms.NumericUpDown();
             this.resetValueStops = new System.Windows.Forms.LinkLabel();
             this.resetValueIncrement = new System.Windows.Forms.LinkLabel();
+            this.label41 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.ManualPage.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -749,6 +750,7 @@ namespace Hilo_v2
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label41);
             this.tabPage3.Controls.Add(this.SeedBox3);
             this.tabPage3.Controls.Add(this.label26);
             this.tabPage3.Controls.Add(this.SeedcheckBox);
@@ -1802,6 +1804,15 @@ namespace Hilo_v2
             this.resetValueIncrement.Text = "Reset Values";
             this.resetValueIncrement.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.resetValueIncrement_LinkClicked);
             // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(328, 8);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(181, 16);
+            this.label41.TabIndex = 55;
+            this.label41.Text = "Empty value = Random seed";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2001,6 +2012,7 @@ namespace Hilo_v2
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.LinkLabel resetValueIncrement;
         private System.Windows.Forms.LinkLabel resetValueStops;
+        private System.Windows.Forms.Label label41;
     }
 
 
