@@ -442,5 +442,65 @@ namespace Hilo_v2.Properties {
                 this["resetBasewinsOf"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal stopBalanceOver {
+            get {
+                return ((decimal)(this["stopBalanceOver"]));
+            }
+            set {
+                this["stopBalanceOver"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal stopBalanceUnder {
+            get {
+                return ((decimal)(this["stopBalanceUnder"]));
+            }
+            set {
+                this["stopBalanceUnder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal stopProfitBet {
+            get {
+                return ((decimal)(this["stopProfitBet"]));
+            }
+            set {
+                this["stopProfitBet"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal stopLossBet {
+            get {
+                return ((decimal)(this["stopLossBet"]));
+            }
+            set {
+                this["stopLossBet"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal stopIfProfitOver {
+            get {
+                return ((decimal)(this["stopIfProfitOver"]));
+            }
+            set {
+                this["stopIfProfitOver"] = value;
+            }
+        }
     }
 }

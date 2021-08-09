@@ -117,39 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox2.Text" xml:space="preserve">
-    <value>Fill the box at Login button with your API key or token.
-
-Numbers that can be used at Hilo Bot. (fill the patterns)
-Type numbers separated by comma. (e.g 5,5,5)
-Number 0 for going Low.
-Number 1 for going High.
-Number 2 for going Equal. (payout will be 12.87x if the same card appeared.)
-Number 3 for random (the bot can choose randomly for equal/hi/low.)
-Number 4 for going the Lowest Odds (example, you have 8, the bot will going Hi because of higher payout)
-Number 5 for going the Highest Odds (example, you have 6, the bot will going Hi because of lowest payout / safe risk)
-Number 7 for Skip.
-
-Rank: A,2,3,4,5,6,7,8,9,10,J,Q,K
-Suit: H, C, D, S 
-In Pattern write numbers 0-7. Example: 2,4,5,5,1,0,7
-
-All instructions is on forum:
-https://forum.stake.com/topic/44407-hilo-bot-made-for-hunters/
-
-Odds: (%)
-A - 92,30
-K - 92,30
-Q - 92,30
-J - 84,60
-10 - 76,90
-9 - 69,20
-8 - 61,50
-7 - 53,80
-6 - 61,50
-5 - 69,20
-4 - 76,90
-3 - 84,60
-2 - 92,30</value>
-  </data>
 </root>
