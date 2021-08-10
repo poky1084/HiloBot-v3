@@ -1581,8 +1581,8 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(Application.StartupPath + @"\ding.wav");
-                player.Play();
+                //System.Media.SoundPlayer player = new System.Media.SoundPlayer(Application.StartupPath + @"\ding.wav");
+                //player.Play();
             }
             
         }
