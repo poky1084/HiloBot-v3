@@ -693,7 +693,7 @@ namespace Hilo_v2
                                     run = 0;
                                     patternBox.Enabled = true;
                                     ResetBaseAfterStop();
-                                    var text = "Paused (Pause on Multiplier)";
+                                    var text = "Paused";
                                     AddLog(text);
                                     EditStatus(text);
                                 }
@@ -741,7 +741,7 @@ namespace Hilo_v2
 
                                                 patternBox.Enabled = true;
                                                 ResetBaseAfterStop();
-                                                var text = "Paused (Pause on pattern)";
+                                                var text = "Paused";
                                                 AddLog(text);
                                                 EditStatus(text);
                                             }
@@ -822,8 +822,8 @@ namespace Hilo_v2
                         }
                         else if (response.errors[0].errorType == "hiloMaxSkip")
                         {
-                            var guess = Pattern(list.Count - 1);
-                            HiloNext(guess);
+                            //var guess = Pattern(list.Count - 1);
+                            //HiloNext(guess);
                         }
                         EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
 
@@ -909,7 +909,7 @@ namespace Hilo_v2
                         
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
-                        
+                        Playsound();
                         if (ResettoBaseWin.Checked == true && afterwinsof >= resetBasewinsOf.Value)
                         {
                             if (betamount > BaseBetAmount.Value)
@@ -1532,6 +1532,7 @@ namespace Hilo_v2
                     {
 
                         AddLog("Manual Cashout");
+                        Playsound();
                         BetList(response);
                         ClearCards();
                         wincount++;
@@ -1576,7 +1577,15 @@ namespace Hilo_v2
             }
         }
 
-
+        private void Playsound()
+        {
+            if(playSoundwinCheck.CheckState == CheckState.Checked)
+            {
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(Properties.Resources.Cashout);
+                player.Play();
+            }
+            
+        }
         private async Task RotateSeed()
         {
 
@@ -1772,6 +1781,7 @@ namespace Hilo_v2
             stopProfitBet.Value = Properties.Settings.Default.stopProfitBet;
             stopBalanceOver.Value = Properties.Settings.Default.stopBalanceOver;
             stopIfProfitOver.Value = Properties.Settings.Default.stopIfProfitOver;
+            playSoundwinCheck.Checked = Properties.Settings.Default.playSoundwinCheck;
         }
 
 
@@ -2058,6 +2068,11 @@ namespace Hilo_v2
             stopProfitBet.Value = 0;
             stopLossBet.Value = 0;
             stopIfProfitOver.Value = 0;
+        }
+
+        private void playSoundwinCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.playSoundwinCheck = playSoundwinCheck.Checked;
         }
     }
 }

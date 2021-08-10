@@ -59,5 +59,14 @@ namespace Hilo_v2.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ./bell.wav.
+        /// </summary>
+        internal static string Cashout {
+            get {
+                return ResourceManager.GetString("Cashout", resourceCulture);
+            }
+        }
     }
 }

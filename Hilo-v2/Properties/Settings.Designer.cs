@@ -502,5 +502,17 @@ namespace Hilo_v2.Properties {
                 this["stopIfProfitOver"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool playSoundwinCheck {
+            get {
+                return ((bool)(this["playSoundwinCheck"]));
+            }
+            set {
+                this["playSoundwinCheck"] = value;
+            }
+        }
     }
 }
