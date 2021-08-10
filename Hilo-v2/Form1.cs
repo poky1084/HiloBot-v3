@@ -1677,7 +1677,7 @@ namespace Hilo_v2
             else
             {
                 
-                EditStatus("Pattern numbers only (0-5)");
+                EditStatus("Pattern numbers only (0-7)");
                 button3.Enabled = false;
                 button2.Enabled = false;
             }
