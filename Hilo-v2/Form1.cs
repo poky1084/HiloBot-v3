@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Serialization;
 using System.Net;
+using System.Media;
 
 namespace Hilo_v2
 {
@@ -1581,8 +1582,10 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                //System.Media.SoundPlayer player = new System.Media.SoundPlayer(Application.StartupPath + @"\ding.wav");
-                //player.Play();
+                
+                // SystemSounds.Beep.Play();
+                Action beep = Console.Beep;              
+                beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
             }
             
         }
