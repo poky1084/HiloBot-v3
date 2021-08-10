@@ -61,7 +61,7 @@ namespace Hilo_v2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ./bell.wav.
+        ///   Looks up a localized string similar to ./ding.wav.
         /// </summary>
         internal static string Cashout {
             get {
