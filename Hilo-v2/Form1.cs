@@ -15,7 +15,6 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json.Serialization;
 using System.Net;
 
-
 namespace Hilo_v2
 {
     public partial class Form1 : Form
@@ -1582,7 +1581,7 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(Application.StartupPath+"\\ding.wav");
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer("./ding.wav");
                 player.Play();
             }
             
