@@ -1576,10 +1576,10 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                
+                new System.Threading.Thread(() => Console.Beep(5000, 300)).Start();
                 // SystemSounds.Beep.Play();
-                Action beep = Console.Beep;              
-                beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
+                //Action beep = Console.Beep;              
+                //beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
             }
             
         }
