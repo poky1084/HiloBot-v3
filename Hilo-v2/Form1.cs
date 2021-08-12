@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json.Serialization;
 using System.Net;
-
+using System.Media;
 
 namespace Hilo_v2
 {
@@ -1576,10 +1576,13 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                
+                using (var soundPlayer = new SoundPlayer(Application.StartupPath+@"\win.wav"))
+                {
+                    soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                }
                 // SystemSounds.Beep.Play();
-                Action beep = Console.Beep;              
-                beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
+                //Action beep = Console.Beep;              
+                //beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
             }
             
         }
