@@ -5,14 +5,21 @@
     <TargetFramework>net48</TargetFramework>
     <RootNamespace>Hilo_v2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>icon-default.ico</ApplicationIcon>
+    <ApplicationIcon>Icon1.ico</ApplicationIcon>
     <StartupObject></StartupObject>
     <AssemblyName>Hilo-v3</AssemblyName>
+    <Win32Resource />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

@@ -1111,7 +1111,7 @@ namespace Hilo_v2
                 else if (num1 < num2)
                     str = "1";
             }
-            catch (Exception ex)
+            catch
             {
 
             }
@@ -1576,7 +1576,7 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                using (var soundPlayer = new SoundPlayer(Application.StartupPath+@"\win.wav"))
+                using (var soundPlayer = new SoundPlayer(Properties.Resources.win))
                 {
                     soundPlayer.Play(); // can also use soundPlayer.PlaySync()
                 }
