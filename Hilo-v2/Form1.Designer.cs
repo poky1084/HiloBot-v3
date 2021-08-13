@@ -838,6 +838,7 @@ namespace Hilo_v2
             this.groupBox2.TabIndex = 57;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sound";
+            this.groupBox2.Visible = false;
             // 
             // playSoundpatternCheck
             // 
