@@ -72,6 +72,7 @@ namespace Hilo_v2
             this.label11 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.playSoundpatternCheck = new System.Windows.Forms.CheckBox();
             this.playSoundwinCheck = new System.Windows.Forms.CheckBox();
             this.label41 = new System.Windows.Forms.Label();
             this.SeedBox3 = new System.Windows.Forms.TextBox();
@@ -829,6 +830,7 @@ namespace Hilo_v2
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.playSoundpatternCheck);
             this.groupBox2.Controls.Add(this.playSoundwinCheck);
             this.groupBox2.Location = new System.Drawing.Point(3, 65);
             this.groupBox2.Name = "groupBox2";
@@ -836,7 +838,17 @@ namespace Hilo_v2
             this.groupBox2.TabIndex = 57;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sound";
-            this.groupBox2.Visible = false;
+            // 
+            // playSoundpatternCheck
+            // 
+            this.playSoundpatternCheck.AutoSize = true;
+            this.playSoundpatternCheck.Location = new System.Drawing.Point(149, 19);
+            this.playSoundpatternCheck.Name = "playSoundpatternCheck";
+            this.playSoundpatternCheck.Size = new System.Drawing.Size(156, 20);
+            this.playSoundpatternCheck.TabIndex = 57;
+            this.playSoundpatternCheck.Text = "Play sound on pattern";
+            this.playSoundpatternCheck.UseVisualStyleBackColor = true;
+            this.playSoundpatternCheck.CheckedChanged += new System.EventHandler(this.playSoundpatternCheck_CheckedChanged);
             // 
             // playSoundwinCheck
             // 
@@ -2044,6 +2056,7 @@ namespace Hilo_v2
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox playSoundwinCheck;
+        private System.Windows.Forms.CheckBox playSoundpatternCheck;
     }
 
 

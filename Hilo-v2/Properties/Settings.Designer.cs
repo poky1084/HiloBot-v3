@@ -514,5 +514,17 @@ namespace Hilo_v2.Properties {
                 this["playSoundwinCheck"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool playSoundpatternCheck {
+            get {
+                return ((bool)(this["playSoundpatternCheck"]));
+            }
+            set {
+                this["playSoundpatternCheck"] = value;
+            }
+        }
     }
 }

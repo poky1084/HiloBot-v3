@@ -731,7 +731,13 @@ namespace Hilo_v2
                                             else
                                             {
                                                 run = 0;
+                                                if(IsPlay())
+                                                {
+                                                    Playsound();
+                                                }
 
+                                                
+                                                
 
                                                 patternBox.Enabled = true;
                                                 ResetBaseAfterStop();
@@ -903,7 +909,11 @@ namespace Hilo_v2
                         
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
-                        Playsound();
+
+                        if (IsPlay())
+                        {
+                            Playsound();
+                        }
                         if (ResettoBaseWin.Checked == true && afterwinsof >= resetBasewinsOf.Value)
                         {
                             if (betamount > BaseBetAmount.Value)
@@ -1526,7 +1536,10 @@ namespace Hilo_v2
                     {
 
                         AddLog("Manual Cashout");
-                        Playsound();
+                        if (IsPlay())
+                        {
+                            Playsound();
+                        }
                         BetList(response);
                         ClearCards();
                         wincount++;
@@ -1570,17 +1583,29 @@ namespace Hilo_v2
 
             }
         }
-
+        private bool IsPlay()
+        {
+            if (playSoundwinCheck.CheckState == CheckState.Checked && pauseonpattern == false)
+            {
+                return true;
+            }
+            if (playSoundpatternCheck.CheckState == CheckState.Checked && pauseonpattern == true)
+            {
+                return true;
+            }
+            return false;
+        }
         private void Playsound()
         {
-            if(playSoundwinCheck.CheckState == CheckState.Checked)
+            using (var soundPlayer = new System.Media.SoundPlayer(Properties.Resources.win))
             {
+                    soundPlayer.Play(); // can also use soundPlayer.PlaySync()
 
-                // SystemSounds.Beep.Play();
-                //Action beep = Console.Beep;              
-                //beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
             }
             
+            // SystemSounds.Beep.Play();
+            //Action beep = Console.Beep;              
+            //beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);    
         }
         private async Task RotateSeed()
         {
@@ -1779,6 +1804,7 @@ namespace Hilo_v2
             stopBalanceOver.Value = Properties.Settings.Default.stopBalanceOver;
             stopIfProfitOver.Value = Properties.Settings.Default.stopIfProfitOver;
             playSoundwinCheck.Checked = Properties.Settings.Default.playSoundwinCheck;
+            playSoundpatternCheck.Checked = Properties.Settings.Default.playSoundpatternCheck;
         }
 
 
@@ -2070,6 +2096,11 @@ namespace Hilo_v2
         private void playSoundwinCheck_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.playSoundwinCheck = playSoundwinCheck.Checked;
+        }
+
+        private void playSoundpatternCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.playSoundpatternCheck = playSoundpatternCheck.Checked;
         }
     }
 }
