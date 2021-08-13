@@ -1597,11 +1597,11 @@ namespace Hilo_v2
         }
         private void Playsound()
         {
-            using (var soundPlayer = new System.Media.SoundPlayer(Properties.Resources.win))
+            /*using (var soundPlayer = new System.Media.SoundPlayer(Properties.Resources.win))
             {
                     soundPlayer.Play(); // can also use soundPlayer.PlaySync()
 
-            }
+            }*/
             
             // SystemSounds.Beep.Play();
             //Action beep = Console.Beep;              
