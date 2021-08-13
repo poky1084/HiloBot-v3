@@ -725,7 +725,10 @@ namespace Hilo_v2
 
                                             if (!pauseonpattern)
                                             {
-
+                                                if (IsPlay())
+                                                {
+                                                    Playsound();
+                                                }
                                                 HiloCashout();
                                             }
                                             else
@@ -910,7 +913,7 @@ namespace Hilo_v2
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
 
-                        if (IsPlay())
+                        if (playSoundwinCheck.CheckState == CheckState.Checked)
                         {
                             Playsound();
                         }
@@ -1536,7 +1539,8 @@ namespace Hilo_v2
                     {
 
                         AddLog("Manual Cashout");
-                        if (IsPlay())
+
+                        if (playSoundwinCheck.CheckState == CheckState.Checked)
                         {
                             Playsound();
                         }
@@ -1585,11 +1589,8 @@ namespace Hilo_v2
         }
         private bool IsPlay()
         {
-            if (playSoundwinCheck.CheckState == CheckState.Checked && pauseonpattern == false)
-            {
-                return true;
-            }
-            if (playSoundpatternCheck.CheckState == CheckState.Checked && pauseonpattern == true)
+ 
+            if (playSoundpatternCheck.CheckState == CheckState.Checked)
             {
                 return true;
             }
@@ -1597,11 +1598,11 @@ namespace Hilo_v2
         }
         private void Playsound()
         {
-            /*using (var soundPlayer = new System.Media.SoundPlayer(Properties.Resources.win))
+            using (var soundPlayer = new System.Media.SoundPlayer(Application.StartupPath+@"\win.wav"))
             {
                     soundPlayer.Play(); // can also use soundPlayer.PlaySync()
 
-            }*/
+            }
             
             // SystemSounds.Beep.Play();
             //Action beep = Console.Beep;              
