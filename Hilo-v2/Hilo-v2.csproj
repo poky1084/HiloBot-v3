@@ -10,6 +10,7 @@
     <AssemblyName>Hilo-v3</AssemblyName>
     <Win32Resource />
     <Platforms>x86</Platforms>
+    <Configurations>Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
