@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json.Serialization;
 using System.Net;
-using System.Media;
 
 namespace Hilo_v2
 {
@@ -1576,10 +1575,7 @@ namespace Hilo_v2
         {
             if(playSoundwinCheck.CheckState == CheckState.Checked)
             {
-                using (var soundPlayer = new SoundPlayer(Properties.Resources.win))
-                {
-                    soundPlayer.Play(); // can also use soundPlayer.PlaySync()
-                }
+
                 // SystemSounds.Beep.Play();
                 //Action beep = Console.Beep;              
                 //beep.BeginInvoke((a) => { beep.EndInvoke(a); }, null);
@@ -1671,6 +1667,7 @@ namespace Hilo_v2
                 Properties.Settings.Default.pattern = patternBox.Text;
                 button3.Enabled = true;
                 button2.Enabled = true;
+                EditStatus("");
                 // string[] strArray = patternBox.Text.Trim().Split(',');
                 //int[] myInts = Array.ConvertAll(strArray, s => int.Parse(s));
             }

@@ -30,8 +30,6 @@ namespace Hilo_v2
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-
-            this.Icon = Properties.Resources.Icon1;
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -73,6 +71,8 @@ namespace Hilo_v2
             this.StopLimit = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.playSoundwinCheck = new System.Windows.Forms.CheckBox();
             this.label41 = new System.Windows.Forms.Label();
             this.SeedBox3 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -160,8 +160,6 @@ namespace Hilo_v2
             this.label32 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.playSoundwinCheck = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.ManualPage.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -182,6 +180,7 @@ namespace Hilo_v2
             ((System.ComponentModel.ISupportInitialize)(this.stopBalanceUnder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StopLimit)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SeedxWin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SeedxLose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Seedxbets)).BeginInit();
@@ -197,7 +196,6 @@ namespace Hilo_v2
             this.LogPage.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -828,6 +826,28 @@ namespace Hilo_v2
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Seeds / Delay";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.playSoundwinCheck);
+            this.groupBox2.Location = new System.Drawing.Point(3, 65);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(543, 45);
+            this.groupBox2.TabIndex = 57;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Sound";
+            this.groupBox2.Visible = false;
+            // 
+            // playSoundwinCheck
+            // 
+            this.playSoundwinCheck.AutoSize = true;
+            this.playSoundwinCheck.Location = new System.Drawing.Point(9, 19);
+            this.playSoundwinCheck.Name = "playSoundwinCheck";
+            this.playSoundwinCheck.Size = new System.Drawing.Size(134, 20);
+            this.playSoundwinCheck.TabIndex = 56;
+            this.playSoundwinCheck.Text = "Play sound on win";
+            this.playSoundwinCheck.UseVisualStyleBackColor = true;
+            this.playSoundwinCheck.CheckedChanged += new System.EventHandler(this.playSoundwinCheck_CheckedChanged);
             // 
             // label41
             // 
@@ -1819,27 +1839,6 @@ namespace Hilo_v2
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // playSoundwinCheck
-            // 
-            this.playSoundwinCheck.AutoSize = true;
-            this.playSoundwinCheck.Location = new System.Drawing.Point(9, 19);
-            this.playSoundwinCheck.Name = "playSoundwinCheck";
-            this.playSoundwinCheck.Size = new System.Drawing.Size(134, 20);
-            this.playSoundwinCheck.TabIndex = 56;
-            this.playSoundwinCheck.Text = "Play sound on win";
-            this.playSoundwinCheck.UseVisualStyleBackColor = true;
-            this.playSoundwinCheck.CheckedChanged += new System.EventHandler(this.playSoundwinCheck_CheckedChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.playSoundwinCheck);
-            this.groupBox2.Location = new System.Drawing.Point(3, 65);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(543, 45);
-            this.groupBox2.TabIndex = 57;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Sound";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1859,6 +1858,7 @@ namespace Hilo_v2
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = global::Hilo_v2.Properties.Resources.Icon1;
             this.Name = "Form1";
             this.Text = "HiLo";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1886,6 +1886,8 @@ namespace Hilo_v2
             ((System.ComponentModel.ISupportInitialize)(this.StopLimit)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SeedxWin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SeedxLose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Seedxbets)).EndInit();
@@ -1905,8 +1907,6 @@ namespace Hilo_v2
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
