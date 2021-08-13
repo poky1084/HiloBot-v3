@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <RootNamespace>Hilo_v2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Icon1.ico</ApplicationIcon>
     <StartupObject></StartupObject>
     <AssemblyName>Hilo-v3</AssemblyName>
     <Win32Resource />
-    <Platforms>x86</Platforms>
+    <Platforms>x64</Platforms>
     <Configurations>Release</Configurations>
   </PropertyGroup>
 

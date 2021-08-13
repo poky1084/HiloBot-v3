@@ -302,7 +302,7 @@ namespace Hilo_v2
                 },
 
             });
-            //Debug.WriteLine(restResponse.Content);
+            //System.Diagnostics.Debug.WriteLine(restResponse.Content);
             if (restResponse.StatusCode == HttpStatusCode.OK)
             {
 
@@ -330,18 +330,12 @@ namespace Hilo_v2
                 else
                 {
 
-                    if (response.errors[0].errorType == "invalidSession")
-                    {
-                        AddLog("Error logging in (Wrong api key)");
-                        textBox1.Enabled = true;
-                        button1.Enabled = true;
-                        loggedin = false;
-                    }
-                    else
-                    {
-                        EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
 
-                    }
+                    textBox1.Enabled = true;
+                    button1.Enabled = true;
+                    loggedin = false;
+                    EditStatus(response.errors[0].message + " (" + response.errors[0].errorType + ")");
+
 
 
                 }
