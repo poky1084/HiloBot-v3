@@ -1871,7 +1871,7 @@ namespace Hilo_v2
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::Hilo_v2.Properties.Resources.Icon1;
+           //this.Icon = global::Hilo_v2.Properties.Resources.Icon1;
             this.Name = "Form1";
             this.Text = "HiLo";
             this.Load += new System.EventHandler(this.Form1_Load);
