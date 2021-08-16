@@ -9,7 +9,7 @@
     <StartupObject></StartupObject>
     <AssemblyName>Hilo-v3</AssemblyName>
     <Win32Resource />
-    <Platforms>x64</Platforms>
+    <Platforms>x86</Platforms>
     <Configurations>Release</Configurations>
   </PropertyGroup>
 
