@@ -860,8 +860,8 @@ namespace Hilo_v2
             }
             else
             {
-                AddLog("Auto/Manual stopped.");
-
+                AddLog("Auto stopped");
+                EditStatus("Auto Stopped");
                 patternBox.Enabled = true;
 
             }
