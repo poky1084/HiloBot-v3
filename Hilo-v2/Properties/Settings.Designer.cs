@@ -12,7 +12,7 @@ namespace Hilo_v2.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.2.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -524,6 +524,102 @@ namespace Hilo_v2.Properties {
             }
             set {
                 this["playSoundpatternCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal winIncrement {
+            get {
+                return ((decimal)(this["winIncrement"]));
+            }
+            set {
+                this["winIncrement"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal winstreakIncrement {
+            get {
+                return ((decimal)(this["winstreakIncrement"]));
+            }
+            set {
+                this["winstreakIncrement"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal afterwinsOf {
+            get {
+                return ((decimal)(this["afterwinsOf"]));
+            }
+            set {
+                this["afterwinsOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal afterwinstreakOf {
+            get {
+                return ((decimal)(this["afterwinstreakOf"]));
+            }
+            set {
+                this["afterwinstreakOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ResetBaseLossesCheck {
+            get {
+                return ((bool)(this["ResetBaseLossesCheck"]));
+            }
+            set {
+                this["ResetBaseLossesCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RestBaseLosestreakCheck {
+            get {
+                return ((bool)(this["RestBaseLosestreakCheck"]));
+            }
+            set {
+                this["RestBaseLosestreakCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal resetBaselossesOf {
+            get {
+                return ((decimal)(this["resetBaselossesOf"]));
+            }
+            set {
+                this["resetBaselossesOf"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal resetBaselosestreakOf {
+            get {
+                return ((decimal)(this["resetBaselosestreakOf"]));
+            }
+            set {
+                this["resetBaselosestreakOf"] = value;
             }
         }
     }

@@ -5,12 +5,13 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>Hilo_v2</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Icon1.ico</ApplicationIcon>
+    <ApplicationIcon>C:\Users\dev\source\repos\poky1084\HiloBot-v3\Hilo-v2\Icon1.ico</ApplicationIcon>
     <StartupObject></StartupObject>
     <AssemblyName>Hilo-v3</AssemblyName>
     <Win32Resource />
     <Platforms>x86</Platforms>
     <Configurations>Release</Configurations>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>

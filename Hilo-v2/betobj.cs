@@ -57,6 +57,7 @@ namespace Hilo_v2
     public class Available
     {
         public decimal amount { get; set; }
+        public string currency { get; set; }
     }
     public class Betdata
     {
