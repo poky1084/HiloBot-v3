@@ -935,12 +935,12 @@ namespace Hilo_v2
                         {
                             Playsound();
                         }
-                        if(incrafterwinsof >= winIncrement.Value && afterwinsOf.Value > 0)
+                        if(incrafterwinsof >= afterwinsOf.Value && afterwinsOf.Value > 0)
                         {
                             incrafterwinsof = 0;
                             betamount *= winIncrement.Value;
                         }
-                        if(incrafterwinstreaks >= winstreakIncrement.Value && afterwinstreakOf.Value > 0)
+                        if(incrafterwinstreaks >= afterwinstreakOf.Value && afterwinstreakOf.Value > 0)
                         {
                             incrafterwinstreaks = 0;
                             betamount *= winstreakIncrement.Value;
