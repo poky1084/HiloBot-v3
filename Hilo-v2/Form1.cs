@@ -57,6 +57,7 @@ namespace Hilo_v2
         int maxlosestreak = 0;
         int maxwinstreak = 0;
         decimal maxbetmade = 0;
+        string lastProbability = "0.00x";
         List<int> highestloss = new List<int>();
         List<int> highestwin = new List<int>();
         List<decimal> highestbet = new List<decimal>();
@@ -161,7 +162,11 @@ namespace Hilo_v2
                 if(payoutmulti >= 1000)
                 {
                     multiplier = payoutmulti.ToString("#") + "x";
-                }                
+                }
+
+                if(multiplier != "0x")
+                    lastProbability = multiplier;
+
                 //var carditem = new ListViewItem(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));                
                 //listView1.Items.Add(carditem);
                 //listView1.Items[listView1.Items.Count - 1].EnsureVisible();
@@ -247,7 +252,7 @@ namespace Hilo_v2
                 decimal profit = response.data.hiloCashout.payout - response.data.hiloCashout.amount;
                 double multiplier = response.data.hiloCashout.payoutMultiplier;
                 string cards = string.Join(",", list);
-                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
+                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards, lastProbability, response.data.hiloCashout.updatedAt };
                 var betitem = new ListViewItem(row);
                 betitem.Font = new Font("Consolas", 10f);
                 if(multiplier > 0)
@@ -267,7 +272,7 @@ namespace Hilo_v2
                 decimal profit = -response.data.hiloNext.amount;
                 double multiplier = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
                 string cards = string.Join(",", list).Replace(",", " ");
-                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
+                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards, lastProbability, response.data.hiloNext.updatedAt };
                 var betitem = new ListViewItem(row);
                 betitem.Font = new Font("Consolas", 10f);
                 listView4.Items.Insert(0, betitem);
@@ -460,6 +465,24 @@ namespace Hilo_v2
 
         }
 
+        private string GetRandomCardRank()
+        {
+            var ranks = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+            var r = new Random();
+            var i = r.Next(ranks.Length);
+
+            return ranks[i];
+        }
+        private string GetRandomCardColor()
+        {
+            var colors = new string[] { "H", "C", "D", "S" };
+
+            var r = new Random();
+            var i = r.Next(colors.Length);
+
+            return colors[i];
+        }
         private async void HiloBet()
         {
             if (DelayBet.Value > 0)
@@ -494,6 +517,8 @@ namespace Hilo_v2
             }
             if (run == 1)
             {
+                lastProbability = "0.0x";
+
                 var url = mirror;
                 var request = new RestRequest(Method.POST);
                 var client = new RestClient(url);
@@ -505,8 +530,8 @@ namespace Hilo_v2
                     amount = betamount,
                     startCard = new Card()
                     {
-                        suit = suitBox2.Text,
-                        rank = rankBox2.Text
+                        suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                        rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                     }
 
                 };
@@ -1356,8 +1381,8 @@ namespace Hilo_v2
                 amount = betamount,
                 startCard = new Card()
                 {
-                    suit = suitBox2.Text,
-                    rank = rankBox2.Text
+                    suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                    rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                 }
 
             };
@@ -1802,6 +1827,7 @@ namespace Hilo_v2
             StopWincheckBox2.Checked = Properties.Settings.Default.StopWincheckBox2;
             CashoutcheckBox2.Checked = Properties.Settings.Default.CashoutcheckBox2;
             checkBox1.Checked = Properties.Settings.Default.checkBox1;
+            cbAutoCard.Checked = Properties.Settings.Default.AutoCard;
 
             PauseMulticheckBox.Checked = Properties.Settings.Default.PauseMulticheckBox;
             SeedcheckBox.Checked = Properties.Settings.Default.SeedcheckBox;
@@ -2186,6 +2212,19 @@ namespace Hilo_v2
         private void resetBaselosestreakOf_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.resetBaselosestreakOf = resetBaselosestreakOf.Value;
+        }
+
+        private void cbAutoCard_CheckedChanged(object sender, EventArgs e)
+        {
+            rankBox2.Enabled = !cbAutoCard.Checked;
+            suitBox2.Enabled = !cbAutoCard.Checked;
+
+            Properties.Settings.Default.AutoCard = cbAutoCard.Checked;
+        }
+
+        private void listView4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
