@@ -460,6 +460,24 @@ namespace Hilo_v2
 
         }
 
+        private string GetRandomCardRank()
+        {
+            var ranks = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+            var r = new Random();
+            var i = r.Next(ranks.Length);
+
+            return ranks[i];
+        }
+        private string GetRandomCardColor()
+        {
+            var colors = new string[] { "H", "C", "D", "S" };
+
+            var r = new Random();
+            var i = r.Next(colors.Length);
+
+            return colors[i];
+        }
         private async void HiloBet()
         {
             if (DelayBet.Value > 0)
@@ -505,8 +523,8 @@ namespace Hilo_v2
                     amount = betamount,
                     startCard = new Card()
                     {
-                        suit = suitBox2.Text,
-                        rank = rankBox2.Text
+                        suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                        rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                     }
 
                 };
@@ -1356,8 +1374,8 @@ namespace Hilo_v2
                 amount = betamount,
                 startCard = new Card()
                 {
-                    suit = suitBox2.Text,
-                    rank = rankBox2.Text
+                    suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                    rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                 }
 
             };
@@ -2186,6 +2204,14 @@ namespace Hilo_v2
         private void resetBaselosestreakOf_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.resetBaselosestreakOf = resetBaselosestreakOf.Value;
+        }
+
+        private void cbAutoCard_CheckedChanged(object sender, EventArgs e)
+        {
+            rankBox2.Enabled = !cbAutoCard.Checked;
+            suitBox2.Enabled = !cbAutoCard.Checked;
+
+            Properties.Settings.Default.AutoCard = cbAutoCard.Checked;
         }
     }
 }
