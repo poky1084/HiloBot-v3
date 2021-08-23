@@ -622,5 +622,20 @@ namespace Hilo_v2.Properties {
                 this["resetBaselosestreakOf"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoCard
+        {
+            get
+            {
+                return ((bool)(this["autoCard"]));
+            }
+            set
+            {
+                this["autoCard"] = value;
+            }
+        }
     }
 }
