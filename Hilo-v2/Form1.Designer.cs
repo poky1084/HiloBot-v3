@@ -38,6 +38,10 @@ namespace Hilo_v2
             this.label25 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ResetBaseWinamountCheck = new System.Windows.Forms.CheckBox();
+            this.resetBaseWinamountOf = new System.Windows.Forms.NumericUpDown();
+            this.ResetBaseLossamountCheck = new System.Windows.Forms.CheckBox();
+            this.resetBaseLossamountOf = new System.Windows.Forms.NumericUpDown();
             this.ResetBaseLossesCheck = new System.Windows.Forms.CheckBox();
             this.RestBaseLosestreakCheck = new System.Windows.Forms.CheckBox();
             this.resetBaselosestreakOf = new System.Windows.Forms.NumericUpDown();
@@ -69,6 +73,14 @@ namespace Hilo_v2
             this.label34 = new System.Windows.Forms.Label();
             this.betIncrement = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.StopAfterLosestreakOf = new System.Windows.Forms.NumericUpDown();
+            this.label49 = new System.Windows.Forms.Label();
+            this.StopAfterWinstreakOf = new System.Windows.Forms.NumericUpDown();
+            this.label48 = new System.Windows.Forms.Label();
+            this.StopAfterLossesOf = new System.Windows.Forms.NumericUpDown();
+            this.label47 = new System.Windows.Forms.Label();
+            this.StopAfterWinsOf = new System.Windows.Forms.NumericUpDown();
+            this.label46 = new System.Windows.Forms.Label();
             this.resetValueStops = new System.Windows.Forms.LinkLabel();
             this.stopIfProfitOver = new System.Windows.Forms.NumericUpDown();
             this.label40 = new System.Windows.Forms.Label();
@@ -173,10 +185,14 @@ namespace Hilo_v2
             this.label32 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.ResetCounterLabel = new System.Windows.Forms.LinkLabel();
+            this.ResetCountersLabel2 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.ManualPage.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resetBaseWinamountOf)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resetBaseLossamountOf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetBaselosestreakOf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetBaselossesOf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.winstreakIncrement)).BeginInit();
@@ -192,6 +208,10 @@ namespace Hilo_v2
             ((System.ComponentModel.ISupportInitialize)(this.afterlossesOf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.betIncrement)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterLosestreakOf)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterWinstreakOf)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterLossesOf)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterWinsOf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopIfProfitOver)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopBalanceOver)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopLossBet)).BeginInit();
@@ -331,6 +351,11 @@ namespace Hilo_v2
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.ResetCounterLabel);
+            this.tabPage1.Controls.Add(this.ResetBaseWinamountCheck);
+            this.tabPage1.Controls.Add(this.resetBaseWinamountOf);
+            this.tabPage1.Controls.Add(this.ResetBaseLossamountCheck);
+            this.tabPage1.Controls.Add(this.resetBaseLossamountOf);
             this.tabPage1.Controls.Add(this.ResetBaseLossesCheck);
             this.tabPage1.Controls.Add(this.RestBaseLosestreakCheck);
             this.tabPage1.Controls.Add(this.resetBaselosestreakOf);
@@ -368,6 +393,68 @@ namespace Hilo_v2
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Increments";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ResetBaseWinamountCheck
+            // 
+            this.ResetBaseWinamountCheck.AutoSize = true;
+            this.ResetBaseWinamountCheck.Location = new System.Drawing.Point(8, 232);
+            this.ResetBaseWinamountCheck.Name = "ResetBaseWinamountCheck";
+            this.ResetBaseWinamountCheck.Size = new System.Drawing.Size(222, 20);
+            this.ResetBaseWinamountCheck.TabIndex = 101;
+            this.ResetBaseWinamountCheck.Text = "Reset to base | on win betamount";
+            this.ResetBaseWinamountCheck.UseVisualStyleBackColor = true;
+            this.ResetBaseWinamountCheck.CheckedChanged += new System.EventHandler(this.ResetBaseWinamountCheck_CheckedChanged);
+            // 
+            // resetBaseWinamountOf
+            // 
+            this.resetBaseWinamountOf.DecimalPlaces = 8;
+            this.resetBaseWinamountOf.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            393216});
+            this.resetBaseWinamountOf.Location = new System.Drawing.Point(240, 230);
+            this.resetBaseWinamountOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.resetBaseWinamountOf.Name = "resetBaseWinamountOf";
+            this.resetBaseWinamountOf.Size = new System.Drawing.Size(127, 22);
+            this.resetBaseWinamountOf.TabIndex = 100;
+            this.resetBaseWinamountOf.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.resetBaseWinamountOf.ValueChanged += new System.EventHandler(this.resetBaseWinamountOf_ValueChanged);
+            // 
+            // ResetBaseLossamountCheck
+            // 
+            this.ResetBaseLossamountCheck.AutoSize = true;
+            this.ResetBaseLossamountCheck.Location = new System.Drawing.Point(8, 211);
+            this.ResetBaseLossamountCheck.Name = "ResetBaseLossamountCheck";
+            this.ResetBaseLossamountCheck.Size = new System.Drawing.Size(229, 20);
+            this.ResetBaseLossamountCheck.TabIndex = 99;
+            this.ResetBaseLossamountCheck.Text = "Reset to base | on lose betamount";
+            this.ResetBaseLossamountCheck.UseVisualStyleBackColor = true;
+            this.ResetBaseLossamountCheck.CheckedChanged += new System.EventHandler(this.ResetBaseLossamountCheck_CheckedChanged);
+            // 
+            // resetBaseLossamountOf
+            // 
+            this.resetBaseLossamountOf.DecimalPlaces = 8;
+            this.resetBaseLossamountOf.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            393216});
+            this.resetBaseLossamountOf.Location = new System.Drawing.Point(240, 209);
+            this.resetBaseLossamountOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.resetBaseLossamountOf.Name = "resetBaseLossamountOf";
+            this.resetBaseLossamountOf.Size = new System.Drawing.Size(127, 22);
+            this.resetBaseLossamountOf.TabIndex = 98;
+            this.resetBaseLossamountOf.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.resetBaseLossamountOf.ValueChanged += new System.EventHandler(this.resetBaseLossamountOf_ValueChanged);
             // 
             // ResetBaseLossesCheck
             // 
@@ -540,7 +627,7 @@ namespace Hilo_v2
             // resetValueIncrement
             // 
             this.resetValueIncrement.AutoSize = true;
-            this.resetValueIncrement.Location = new System.Drawing.Point(438, 7);
+            this.resetValueIncrement.Location = new System.Drawing.Point(428, 7);
             this.resetValueIncrement.Name = "resetValueIncrement";
             this.resetValueIncrement.Size = new System.Drawing.Size(88, 16);
             this.resetValueIncrement.TabIndex = 85;
@@ -566,7 +653,7 @@ namespace Hilo_v2
             this.ResetBaseStop.AutoSize = true;
             this.ResetBaseStop.Checked = true;
             this.ResetBaseStop.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ResetBaseStop.Location = new System.Drawing.Point(8, 208);
+            this.ResetBaseStop.Location = new System.Drawing.Point(8, 253);
             this.ResetBaseStop.Name = "ResetBaseStop";
             this.ResetBaseStop.Size = new System.Drawing.Size(157, 20);
             this.ResetBaseStop.TabIndex = 34;
@@ -783,6 +870,16 @@ namespace Hilo_v2
             // 
             // tabPage2
             // 
+            this.tabPage2.AutoScroll = true;
+            this.tabPage2.Controls.Add(this.ResetCountersLabel2);
+            this.tabPage2.Controls.Add(this.StopAfterLosestreakOf);
+            this.tabPage2.Controls.Add(this.label49);
+            this.tabPage2.Controls.Add(this.StopAfterWinstreakOf);
+            this.tabPage2.Controls.Add(this.label48);
+            this.tabPage2.Controls.Add(this.StopAfterLossesOf);
+            this.tabPage2.Controls.Add(this.label47);
+            this.tabPage2.Controls.Add(this.StopAfterWinsOf);
+            this.tabPage2.Controls.Add(this.label46);
             this.tabPage2.Controls.Add(this.resetValueStops);
             this.tabPage2.Controls.Add(this.stopIfProfitOver);
             this.tabPage2.Controls.Add(this.label40);
@@ -804,10 +901,98 @@ namespace Hilo_v2
             this.tabPage2.Text = "Stops";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // StopAfterLosestreakOf
+            // 
+            this.StopAfterLosestreakOf.Location = new System.Drawing.Point(159, 210);
+            this.StopAfterLosestreakOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.StopAfterLosestreakOf.Name = "StopAfterLosestreakOf";
+            this.StopAfterLosestreakOf.Size = new System.Drawing.Size(62, 22);
+            this.StopAfterLosestreakOf.TabIndex = 92;
+            this.StopAfterLosestreakOf.ValueChanged += new System.EventHandler(this.StopAfterLosestreakOf_ValueChanged);
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(6, 214);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(144, 16);
+            this.label49.TabIndex = 91;
+            this.label49.Text = "Stop after losestreak of";
+            // 
+            // StopAfterWinstreakOf
+            // 
+            this.StopAfterWinstreakOf.Location = new System.Drawing.Point(159, 162);
+            this.StopAfterWinstreakOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.StopAfterWinstreakOf.Name = "StopAfterWinstreakOf";
+            this.StopAfterWinstreakOf.Size = new System.Drawing.Size(62, 22);
+            this.StopAfterWinstreakOf.TabIndex = 90;
+            this.StopAfterWinstreakOf.ValueChanged += new System.EventHandler(this.StopAfterWinstreakOf_ValueChanged);
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(6, 166);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(137, 16);
+            this.label48.TabIndex = 89;
+            this.label48.Text = "Stop after winstreak of";
+            // 
+            // StopAfterLossesOf
+            // 
+            this.StopAfterLossesOf.Location = new System.Drawing.Point(159, 186);
+            this.StopAfterLossesOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.StopAfterLossesOf.Name = "StopAfterLossesOf";
+            this.StopAfterLossesOf.Size = new System.Drawing.Size(62, 22);
+            this.StopAfterLossesOf.TabIndex = 88;
+            this.StopAfterLossesOf.ValueChanged += new System.EventHandler(this.StopAfterLossesOf_ValueChanged);
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(6, 190);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(121, 16);
+            this.label47.TabIndex = 87;
+            this.label47.Text = "Stop after losses of";
+            // 
+            // StopAfterWinsOf
+            // 
+            this.StopAfterWinsOf.Location = new System.Drawing.Point(159, 137);
+            this.StopAfterWinsOf.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.StopAfterWinsOf.Name = "StopAfterWinsOf";
+            this.StopAfterWinsOf.Size = new System.Drawing.Size(62, 22);
+            this.StopAfterWinsOf.TabIndex = 86;
+            this.StopAfterWinsOf.ValueChanged += new System.EventHandler(this.StopAfterWinsOf_ValueChanged);
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(6, 141);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(107, 16);
+            this.label46.TabIndex = 85;
+            this.label46.Text = "Stop after wins of";
+            // 
             // resetValueStops
             // 
             this.resetValueStops.AutoSize = true;
-            this.resetValueStops.Location = new System.Drawing.Point(458, 131);
+            this.resetValueStops.Location = new System.Drawing.Point(417, 9);
             this.resetValueStops.Name = "resetValueStops";
             this.resetValueStops.Size = new System.Drawing.Size(88, 16);
             this.resetValueStops.TabIndex = 84;
@@ -974,7 +1159,7 @@ namespace Hilo_v2
             0,
             0});
             this.StopLimit.Name = "StopLimit";
-            this.StopLimit.Size = new System.Drawing.Size(73, 22);
+            this.StopLimit.Size = new System.Drawing.Size(120, 22);
             this.StopLimit.TabIndex = 18;
             this.StopLimit.ValueChanged += new System.EventHandler(this.StopLimit_ValueChanged);
             // 
@@ -2027,6 +2212,28 @@ namespace Hilo_v2
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
+            // ResetCounterLabel
+            // 
+            this.ResetCounterLabel.AutoSize = true;
+            this.ResetCounterLabel.Location = new System.Drawing.Point(427, 29);
+            this.ResetCounterLabel.Name = "ResetCounterLabel";
+            this.ResetCounterLabel.Size = new System.Drawing.Size(99, 16);
+            this.ResetCounterLabel.TabIndex = 102;
+            this.ResetCounterLabel.TabStop = true;
+            this.ResetCounterLabel.Text = "Reset Counters";
+            this.ResetCounterLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ResetCounterLabel_LinkClicked);
+            // 
+            // ResetCountersLabel2
+            // 
+            this.ResetCountersLabel2.AutoSize = true;
+            this.ResetCountersLabel2.Location = new System.Drawing.Point(417, 31);
+            this.ResetCountersLabel2.Name = "ResetCountersLabel2";
+            this.ResetCountersLabel2.Size = new System.Drawing.Size(99, 16);
+            this.ResetCountersLabel2.TabIndex = 93;
+            this.ResetCountersLabel2.TabStop = true;
+            this.ResetCountersLabel2.Text = "Reset Counters";
+            this.ResetCountersLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ResetCountersLabel2_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2046,7 +2253,6 @@ namespace Hilo_v2
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            
             this.Name = "Form1";
             this.Text = "HiLo";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -2056,6 +2262,8 @@ namespace Hilo_v2
             this.tabControl2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resetBaseWinamountOf)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resetBaseLossamountOf)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetBaselosestreakOf)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetBaselossesOf)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.winstreakIncrement)).EndInit();
@@ -2072,6 +2280,10 @@ namespace Hilo_v2
             ((System.ComponentModel.ISupportInitialize)(this.betIncrement)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterLosestreakOf)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterWinstreakOf)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterLossesOf)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StopAfterWinsOf)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopIfProfitOver)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopBalanceOver)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stopLossBet)).EndInit();
@@ -2251,6 +2463,20 @@ namespace Hilo_v2
         private System.Windows.Forms.NumericUpDown winIncrement;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.NumericUpDown afterwinsOf;
+        private System.Windows.Forms.CheckBox ResetBaseWinamountCheck;
+        private System.Windows.Forms.NumericUpDown resetBaseWinamountOf;
+        private System.Windows.Forms.CheckBox ResetBaseLossamountCheck;
+        private System.Windows.Forms.NumericUpDown resetBaseLossamountOf;
+        private System.Windows.Forms.NumericUpDown StopAfterLosestreakOf;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.NumericUpDown StopAfterWinstreakOf;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.NumericUpDown StopAfterLossesOf;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.NumericUpDown StopAfterWinsOf;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.LinkLabel ResetCounterLabel;
+        private System.Windows.Forms.LinkLabel ResetCountersLabel2;
     }
 
 
