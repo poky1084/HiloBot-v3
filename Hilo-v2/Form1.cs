@@ -35,10 +35,6 @@ namespace Hilo_v2
         string rowstr = "Start,";
         int gamecount = 0;
         int stopafterbets = 0;
-        int stopafterwinsof = 0;
-        int stopafterlossesof = 0;
-        int stopafterwinstreak = 0;
-        int stopafterlosestreak = 0;
         int baseafterwinsof = 0;
         int baseafterwinstreaks = 0;
         int baseafterlossesof = 0;
@@ -61,6 +57,7 @@ namespace Hilo_v2
         int maxlosestreak = 0;
         int maxwinstreak = 0;
         decimal maxbetmade = 0;
+        string lastProbability = "0.00x";
         List<int> highestloss = new List<int>();
         List<int> highestwin = new List<int>();
         List<decimal> highestbet = new List<decimal>();
@@ -165,7 +162,11 @@ namespace Hilo_v2
                 if(payoutmulti >= 1000)
                 {
                     multiplier = payoutmulti.ToString("#") + "x";
-                }                
+                }
+
+                if(multiplier != "0x")
+                    lastProbability = multiplier;
+
                 //var carditem = new ListViewItem(CardLayout(response.data.hiloNext.state.rounds[nexts].card.rank, response.data.hiloNext.state.rounds[nexts].card.suit));                
                 //listView1.Items.Add(carditem);
                 //listView1.Items[listView1.Items.Count - 1].EnsureVisible();
@@ -251,7 +252,7 @@ namespace Hilo_v2
                 decimal profit = response.data.hiloCashout.payout - response.data.hiloCashout.amount;
                 double multiplier = response.data.hiloCashout.payoutMultiplier;
                 string cards = string.Join(",", list);
-                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
+                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards, lastProbability, response.data.hiloCashout.updatedAt };
                 var betitem = new ListViewItem(row);
                 betitem.Font = new Font("Consolas", 10f);
                 if(multiplier > 0)
@@ -271,7 +272,7 @@ namespace Hilo_v2
                 decimal profit = -response.data.hiloNext.amount;
                 double multiplier = response.data.hiloNext.state.rounds[response.data.hiloNext.state.rounds.Count - 1].payoutMultiplier;
                 string cards = string.Join(",", list).Replace(",", " ");
-                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards };
+                string[] row = { gamecount.ToString(), profit.ToString("0.00000000"), betamount.ToString("0.00000000"), multiplier.ToString("0.00") + "x", cards, lastProbability, response.data.hiloNext.updatedAt };
                 var betitem = new ListViewItem(row);
                 betitem.Font = new Font("Consolas", 10f);
                 listView4.Items.Insert(0, betitem);
@@ -464,6 +465,24 @@ namespace Hilo_v2
 
         }
 
+        private string GetRandomCardRank()
+        {
+            var ranks = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+            var r = new Random();
+            var i = r.Next(ranks.Length);
+
+            return ranks[i];
+        }
+        private string GetRandomCardColor()
+        {
+            var colors = new string[] { "H", "C", "D", "S" };
+
+            var r = new Random();
+            var i = r.Next(colors.Length);
+
+            return colors[i];
+        }
         private async void HiloBet()
         {
             if (DelayBet.Value > 0)
@@ -498,6 +517,8 @@ namespace Hilo_v2
             }
             if (run == 1)
             {
+                lastProbability = "0.0x";
+
                 var url = mirror;
                 var request = new RestRequest(Method.POST);
                 var client = new RestClient(url);
@@ -509,8 +530,8 @@ namespace Hilo_v2
                     amount = betamount,
                     startCard = new Card()
                     {
-                        suit = suitBox2.Text,
-                        rank = rankBox2.Text
+                        suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                        rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                     }
 
                 };
@@ -785,9 +806,6 @@ namespace Hilo_v2
                                 baseafterlossesof++;
                                 incrafterlosestreaks++;
                                 baseafterlosestreaks++;
-                                stopafterlosestreak++;
-                                stopafterwinstreak = 0;
-                                stopafterlossesof++;
                                 BetList(response);
                                 ClearCards();
                                 //profitall -= response.data.hiloNext.amount;
@@ -822,22 +840,8 @@ namespace Hilo_v2
                                 {
                                     await RotateSeed();
                                 }
-                                if (response.data.hiloNext.amount >= resetBaseLossamountOf.Value && ResetBaseLossamountCheck.Checked == true)
+                                if(response.data.hiloNext.amount >= stopLossBet.Value && stopLossBet.Value > 0)
                                 {
-                                    betamount = BaseBetAmount.Value;
-                                }
-                                if (response.data.hiloNext.amount >= stopLossBet.Value && stopLossBet.Value > 0)
-                                {
-                                    run = 0;
-                                }
-                                if(stopafterlosestreak >= StopAfterLosestreakOf.Value && StopAfterLosestreakOf.Value > 0)
-                                {
-                                    stopafterlosestreak = 0;
-                                    run = 0;
-                                }
-                                if(stopafterlossesof >= StopAfterLossesOf.Value && StopAfterLossesOf.Value > 0)
-                                {
-                                    stopafterlossesof = 0;
                                     run = 0;
                                 }
                                 HiloBet();
@@ -942,20 +946,12 @@ namespace Hilo_v2
                         highestwin.Clear();
                         highestwin.Add(maxwinstreak);
                         losestreak = 0;
-
                         baseafterwinsof++;
-                        baseafterlosestreaks = 0;
-                        baseafterwinstreaks++;
-
                         incrafterwinsof++;
+                        baseafterlosestreaks = 0;
                         incrafterlosestreaks = 0;
+                        baseafterwinstreaks++;
                         incrafterwinstreaks++;
-
-                        stopafterwinsof++;
-                        stopafterlosestreak = 0;
-                        stopafterwinstreak++;
-                        
-                        
 
                         profitall += response.data.hiloCashout.payout;
                         UpdateStats();
@@ -964,12 +960,7 @@ namespace Hilo_v2
                         {
                             Playsound();
                         }
-                        if (incrafterbet >= afterbetsOf.Value && afterbetsOf.Value > 0)
-                        {
-                            incrafterbet = 0;
-                            betamount *= betIncrement.Value;
-                        }
-                        if (incrafterwinsof >= afterwinsOf.Value && afterwinsOf.Value > 0)
+                        if(incrafterwinsof >= afterwinsOf.Value && afterwinsOf.Value > 0)
                         {
                             incrafterwinsof = 0;
                             betamount *= winIncrement.Value;
@@ -999,9 +990,10 @@ namespace Hilo_v2
                             baseafterwinstreaks = 0;
                             betamount = BaseBetAmount.Value;
                         }
-                        if(response.data.hiloCashout.amount >= resetBaseWinamountOf.Value && ResetBaseWinamountCheck.Checked == true)
+                        if (betIncrement.Value > 1 && incrafterbet >= afterbetsOf.Value && afterbetsOf.Value > 0)
                         {
-                            betamount = BaseBetAmount.Value;
+                            incrafterbet = 0;
+                            betamount *= betIncrement.Value;
                         }
                         BetList(response);
                         ClearCards();
@@ -1021,17 +1013,7 @@ namespace Hilo_v2
                         {
                             run = 0;
                         }
-                        if (stopafterwinstreak >= StopAfterWinstreakOf.Value && StopAfterWinstreakOf.Value > 0)
-                        {
-                            stopafterwinstreak = 0;
-                            run = 0;
-                        }
-                        if(stopafterwinsof >= StopAfterWinsOf.Value && StopAfterWinsOf.Value > 0)
-                        {
-                            stopafterwinsof = 0;
-                            run = 0;
-                        }
-                        if (SeedcheckBox.Checked == true && IsSeedRotate()) 
+                        if(SeedcheckBox.Checked == true && IsSeedRotate()) 
                         {
                             await RotateSeed();
                         }
@@ -1112,37 +1094,14 @@ namespace Hilo_v2
             {
                 betamount = BaseBetAmount.Value;
             }
-
-        }
-
-        private void ResetCounters()
-        {
-
-            stopafterbets = 0;
-            stopafterwinsof = 0;
-            stopafterlossesof = 0;
-            stopafterwinstreak = 0;
-            stopafterlosestreak = 0;
-            baseafterwinsof = 0;
-            baseafterwinstreaks = 0;
-            baseafterlossesof = 0;
-            baseafterlosestreaks = 0;
-            incrafterbet = 0;
-            incrafterlosses = 0;
-            incrafterlosestreaks = 0;
-            incrafterwinsof = 0;
-            incrafterwinstreaks = 0;
-
         }
         private void button2_Click(object sender, EventArgs e)
         {
             if(run == 1)
             {
                 AddLog("Auto stopped");
-                EditStatus("Auto stopped");
             }
             run = 0;
-            //ResetCounters();
             ResetBaseAfterStop();
         }
 
@@ -1422,8 +1381,8 @@ namespace Hilo_v2
                 amount = betamount,
                 startCard = new Card()
                 {
-                    suit = suitBox2.Text,
-                    rank = rankBox2.Text
+                    suit = Properties.Settings.Default.AutoCard ? GetRandomCardColor() : suitBox2.Text,
+                    rank = Properties.Settings.Default.AutoCard ? GetRandomCardRank() : rankBox2.Text
                 }
 
             };
@@ -1868,6 +1827,7 @@ namespace Hilo_v2
             StopWincheckBox2.Checked = Properties.Settings.Default.StopWincheckBox2;
             CashoutcheckBox2.Checked = Properties.Settings.Default.CashoutcheckBox2;
             checkBox1.Checked = Properties.Settings.Default.checkBox1;
+            cbAutoCard.Checked = Properties.Settings.Default.AutoCard;
 
             PauseMulticheckBox.Checked = Properties.Settings.Default.PauseMulticheckBox;
             SeedcheckBox.Checked = Properties.Settings.Default.SeedcheckBox;
@@ -1909,19 +1869,10 @@ namespace Hilo_v2
             ResetBaseLossesCheck.Checked = Properties.Settings.Default.ResetBaseLossesCheck;
             RestBaseLosestreakCheck.Checked = Properties.Settings.Default.RestBaseLosestreakCheck;
             resetBaselosestreakOf.Value = Properties.Settings.Default.resetBaselosestreakOf;
-
-            //ResetBaseLossamountCheck.Checked = Properties.Settings.Default.ResetBaseLossamountCheck;
-            //resetBaseLossamountOf.Value = Properties.Settings.Default.resetBaseLossamountOf;
-            //ResetBaseWinamountCheck.Checked = Properties.Settings.Default.ResetBaseWinamountCheck;
-            //resetBaseWinamountOf.Value = Properties.Settings.Default.resetBaseWinamountOf;
-            //StopAfterWinsOf.Value = Properties.Settings.Default.StopAfterWinsOf;
-            //StopAfterWinstreakOf.Value = Properties.Settings.Default.StopAfterWinstreakOf;
-            //StopAfterLossesOf.Value = Properties.Settings.Default.StopAfterLossesOf;
-            //StopAfterLosestreakOf.Value = Properties.Settings.Default.StopAfterLosestreakOf;
         }
 
-
-
+       
+       
         private void rankBox_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.startcard = rankBox2.Text;
@@ -2200,9 +2151,6 @@ namespace Hilo_v2
             resetBasewinstreakOf.Value = 1;
             resetBaselosestreakOf.Value = 1;
             resetBaselossesOf.Value = 1;
-
-            resetBaseLossamountOf.Value = 0;
-            resetBaseWinamountOf.Value = 0;
         }
 
         private void resetValueStops_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -2213,11 +2161,6 @@ namespace Hilo_v2
             stopProfitBet.Value = 0;
             stopLossBet.Value = 0;
             stopIfProfitOver.Value = 0;
-
-            StopAfterLossesOf.Value = 0;
-            StopAfterLosestreakOf.Value = 0;
-            StopAfterWinsOf.Value = 0;
-            StopAfterWinstreakOf.Value = 0;
         }
 
         private void playSoundwinCheck_CheckedChanged(object sender, EventArgs e)
@@ -2271,54 +2214,17 @@ namespace Hilo_v2
             Properties.Settings.Default.resetBaselosestreakOf = resetBaselosestreakOf.Value;
         }
 
-        private void ResetBaseLossamountCheck_CheckedChanged(object sender, EventArgs e)
+        private void cbAutoCard_CheckedChanged(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.ResetBaseLossamountCheck = ResetBaseLossamountCheck.Checked;
+            rankBox2.Enabled = !cbAutoCard.Checked;
+            suitBox2.Enabled = !cbAutoCard.Checked;
+
+            Properties.Settings.Default.AutoCard = cbAutoCard.Checked;
         }
 
-        private void resetBaseLossamountOf_ValueChanged(object sender, EventArgs e)
+        private void listView4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.resetBaseLossamountOf = resetBaseLossamountOf.Value;
-        }
 
-        private void ResetBaseWinamountCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.ResetBaseWinamountCheck = ResetBaseWinamountCheck.Checked;
-        }
-
-        private void resetBaseWinamountOf_ValueChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.resetBaseWinamountOf = resetBaseWinamountOf.Value;
-        }
-
-        private void StopAfterWinsOf_ValueChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.StopAfterWinsOf = StopAfterWinsOf.Value;
-        }
-
-        private void StopAfterWinstreakOf_ValueChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.StopAfterWinstreakOf = StopAfterWinstreakOf.Value;
-        }
-
-        private void StopAfterLossesOf_ValueChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.StopAfterLossesOf = StopAfterLossesOf.Value;
-        }
-
-        private void StopAfterLosestreakOf_ValueChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.StopAfterLosestreakOf = StopAfterLosestreakOf.Value;
-        }
-
-        private void ResetCounterLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ResetCounters();
-        }
-
-        private void ResetCountersLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ResetCounters();
         }
     }
 }
